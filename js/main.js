@@ -24,7 +24,7 @@ var getRandomArray = function (array) {
 };
 
 var getAvatar = function (min, max) {
-  return 'img/avatars/user0'+ getRandomFromInterval(min, max) + '.png';
+  return 'img/avatars/user0' + getRandomFromInterval(min, max) + '.png';
 };
 
 var getLocation = function (min, max, ymin, ymax) {
@@ -54,46 +54,46 @@ var TITLES = [
 ];
 
 var TYPES = [
-      'palace',
-      'flat',
-      'house',
-      'bungalo'
-    ];
+  'palace',
+  'flat',
+  'house',
+  'bungalo'
+];
 var CHECKIN = [
-      '12:00',
-      '13:00',
-      '14:00'
-    ];
+  '12:00',
+  '13:00',
+  '14:00'
+];
 
 var CHECKOUT = [
-      '12:00',
-      '13:00',
-      '14:00'
-    ];
+  '12:00',
+  '13:00',
+  '14:00'
+];
 
 var FEATURES = [
-      'wifi',
-      'dishwasher',
-      'parking',
-      'washer',
-      'elevator',
-      'conditioner'
-    ];
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
+];
 var DESCRIPTIONS = [
-      'офигенный',
-      'охрененный',
-      'просто улёт'
-    ];
+  'офигенный',
+  'охрененный',
+  'просто улёт'
+];
 var PHOTOS = [
-      'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-      'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-      'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-    ];
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+];
 
-var PIN_SIZE = {
-  width: 50,
-  height: 70
-};
+// var PIN_SIZE = {
+//   width: 50,
+//   height: 70
+// };
 
 var getOffersOptions = function () {
 
@@ -121,12 +121,12 @@ var getOffersOptions = function () {
       x: getRandomFromInterval(300, 900),
       y: getRandomFromInterval(130, 630)
     }
-  }
+  };
 };
 
 var getPinMap = function () {
   var pin = {
-    pinStyle: 'left: ' + getOffersOptions().location.x + '; ' + 'left: '+ getOffersOptions().location.x + ';',
+    pinStyle: 'left: ' + getOffersOptions().location.x + '; ' + 'left: ' + getOffersOptions().location.x + ';',
     srcStyle: getOffersOptions().author.avatar
 
     // wizardCoatColor: getRandElement(coatColor),
@@ -134,7 +134,6 @@ var getPinMap = function () {
   };
   return pin;
 };
-console.log(getPinMap());
 
 //         <button class="map__pin map__pin--main" style="left: 570px; top: 375px;">
 //           <img src="img/muffin-red.svg" width="40" height="44" draggable="false" alt="Метка объявления">
@@ -168,11 +167,3 @@ for (var i = 0; i < 4; i++) {
   fragment.appendChild(renderPinMap());
   pinsList.appendChild(fragment);
 }
-
-// document.querySelector('.setup-similar').classList.remove('hidden');
-
-
-
-
-
-// console.log(getOffersOptions());
