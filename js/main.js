@@ -36,8 +36,10 @@ var PIN_SIZE = {
   height: 70
 };
 
+var QUANTITY_OF_PINS = 8;
+
 var getLocation = function (min, max, ymin, ymax) {
-  return getRandomFromInterval(min, max) - (PIN_SIZE.width / 2) + ', ' + (getRandomFromInterval(ymin, ymax) - (PIN_SIZE.height / 2));
+  return getRandomFromInterval(min, max) - (PIN_SIZE.width / 2) + ', ' + (getRandomFromInterval(ymin, ymax) - PIN_SIZE.height);
 };
 
 var lOCATIONMINMAX = {
@@ -137,20 +139,6 @@ var getPinMap = function () {
   return pin;
 };
 
-//         <button class="map__pin map__pin--main" style="left: 570px; top: 375px;">
-//           <img src="img/muffin-red.svg" width="40" height="44" draggable="false" alt="Метка объявления">
-//           <svg viewBox="0 0 70 70" width="156" height="156" aria-label="Метка для поиска жилья">
-//             <defs>
-//               <path d="M35,35m-23,0a23,23 0 1,1 46,0a23,23 0 1,1 -46,0" id="tophalf" />
-//             </defs>
-//             <ellipse cx="35" cy="35" rx="35" ry="35" fill="rgba(255, 86, 53, 0.7)" />
-//             <text><textPath xlink:href="#tophalf" startOffset="0">Поставь меня куда-нибудь</textPath></text>
-//           </svg>
-//         </button>
-//             <button type="button" class="map__pin" style="left: 200px; top: 400px;">
-//             <img src="img/avatars/user07.png" width="40" height="40" draggable="false" alt="Метка объявления">
-//             </button>
-
 var renderPinMap = function () {
   var newPinElement = mapPinTemplate.cloneNode(true);
 
@@ -167,7 +155,7 @@ var renderPinMap = function () {
 
 var fragment = document.createDocumentFragment();
 
-for (var i = 0; i < 4; i++) {
+for (var i = 1; i <= QUANTITY_OF_PINS; i++) {
   fragment.appendChild(renderPinMap());
   pinsList.appendChild(fragment);
 }
