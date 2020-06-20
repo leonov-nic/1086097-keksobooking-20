@@ -124,5 +124,55 @@ var getOffersOptions = function () {
   }
 };
 
+var getPinMap = function () {
+  var pin = {
+    pinStyle: 'left: ' + getOffersOptions().location.x + '; ' + 'left: '+ getOffersOptions().location.x + ';',
+    srcStyle: getOffersOptions().author.avatar
 
-console.log(getOffersOptions());
+    // wizardCoatColor: getRandElement(coatColor),
+    // wizardEyasColor: getRandElement(eyasColor)
+  };
+  return pin;
+};
+console.log(getPinMap());
+
+//         <button class="map__pin map__pin--main" style="left: 570px; top: 375px;">
+//           <img src="img/muffin-red.svg" width="40" height="44" draggable="false" alt="Метка объявления">
+//           <svg viewBox="0 0 70 70" width="156" height="156" aria-label="Метка для поиска жилья">
+//             <defs>
+//               <path d="M35,35m-23,0a23,23 0 1,1 46,0a23,23 0 1,1 -46,0" id="tophalf" />
+//             </defs>
+//             <ellipse cx="35" cy="35" rx="35" ry="35" fill="rgba(255, 86, 53, 0.7)" />
+//             <text><textPath xlink:href="#tophalf" startOffset="0">Поставь меня куда-нибудь</textPath></text>
+//           </svg>
+//         </button>
+//             <button type="button" class="map__pin" style="left: 200px; top: 400px;">
+//             <img src="img/avatars/user07.png" width="40" height="40" draggable="false" alt="Метка объявления">
+//             </button>
+
+var renderPinMap = function () {
+  var newPinElement = mapPinTemplate.cloneNode(true);
+
+  newPinElement.style = getPinMap().pinStyle;
+  // newPinElement.style = getPinMap().pinStyle;
+  // mapPinTemplate.querySelector('.setup-similar-label').textContent = wizard.wizardName;
+  // mapPinTemplate.querySelector('.wizard-coat').style.fill = wizard.wizardCoatColor;
+  // mapPinTemplate.querySelector('.wizard-eyes').style.fill = wizard.wizardEyasColor;
+
+  return mapPinTemplate;
+};
+
+var fragment = document.createDocumentFragment();
+
+for (var i = 0; i < 4; i++) {
+  fragment.appendChild(renderPinMap());
+  pinsList.appendChild(fragment);
+}
+
+// document.querySelector('.setup-similar').classList.remove('hidden');
+
+
+
+
+
+// console.log(getOffersOptions());
