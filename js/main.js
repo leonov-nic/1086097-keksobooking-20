@@ -13,7 +13,7 @@ var getRandomFromInterval = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var getRandElement = function (array) {
+var getRandomElement = function (array) {
   var item = array[Math.floor(Math.random() * array.length)];
   return item;
 };
@@ -28,7 +28,7 @@ var getAvatar = function (min, max) {
 };
 
 var getTitle = function (array) {
-  return getRandElement(array);
+  return getRandomElement(array);
 };
 
 var PIN_SIZE = {
@@ -43,13 +43,13 @@ var getLocation = function (min, max, ymin, ymax) {
 };
 
 var lOCATIONMINMAX = {
-  x: {
-    min: 300,
-    max: 900
+  X: {
+    MIN: 300,
+    MAX: 900
   },
-  y: {
-    min: 130,
-    max: 630
+  Y: {
+    MIN: 130,
+    MAX: 630
   }
 };
 
@@ -111,15 +111,15 @@ var getOffersOptions = function () {
 
     offer: {
       title: getTitle(TITLES),
-      address: getLocation(lOCATIONMINMAX.x.min, lOCATIONMINMAX.x.max, lOCATIONMINMAX.y.min, lOCATIONMINMAX.y.min),
+      address: getLocation(lOCATIONMINMAX.X.MIN, lOCATIONMINMAX.X.MAX, lOCATIONMINMAX.Y.MIN, lOCATIONMINMAX.Y.MIN),
       price: getRandomFromInterval(1000, 10000),
       type: getRandomArray(TYPES),
       rooms: getRandomFromInterval(1, 4),
       guests: getRandomFromInterval(1, 8),
-      checkin: getRandElement(CHECKIN),
-      checkout: getRandElement(CHECKOUT),
+      checkin: getRandomElement(CHECKIN),
+      checkout: getRandomElement(CHECKOUT),
       feature: getRandomArray(FEATURES),
-      description: getRandElement(DESCRIPTIONS),
+      description: getRandomElement(DESCRIPTIONS),
       photo: getRandomArray(PHOTOS)
     },
 
@@ -130,32 +130,38 @@ var getOffersOptions = function () {
   };
 };
 
-var getPinMap = function () {
-  var pin = {
-    pinStyle: 'left: ' + getOffersOptions().location.x + 'px' + '; ' + 'top: ' + getOffersOptions().location.x + 'px' + ';',
-    srcAvatar: getOffersOptions().author.avatar,
-    altTitle: getOffersOptions().offer.title
-  };
-  return pin;
+var getPinsMap = function () {
+  var pins = [];
+
+  for (var i = 0; i < QUANTITY_OF_PINS; i++) {
+    var pin = {
+      pinStyle: 'left: ' + getOffersOptions().location.x + 'px' + '; ' + 'top: ' + getOffersOptions().location.x + 'px' + ';',
+      srcAvatar: getOffersOptions().author.avatar,
+      altTitle: getOffersOptions().offer.title
+    };
+    pins.push(pin);
+  }
+  return pins;
 };
 
-var renderPinMap = function () {
+var getFilledPin = function (array) {
   var newPinElement = mapPinTemplate.cloneNode(true);
 
-  newPinElement.style = getPinMap().pinStyle;
-  newPinElement.querySelector('img').src = getPinMap().srcAvatar;
-  newPinElement.querySelector('img').alt = getPinMap().altTitle;
-
-  // mapPinTemplate.querySelector('.setup-similar-label').textContent = wizard.wizardName;
-  // mapPinTemplate.querySelector('.wizard-coat').style.fill = wizard.wizardCoatColor;
-  // mapPinTemplate.querySelector('.wizard-eyes').style.fill = wizard.wizardEyasColor;
+  newPinElement.style = array.pinStyle;
+  newPinElement.querySelector('img').src = array.srcAvatar;
+  newPinElement.querySelector('img').alt = array.altTitle;
 
   return newPinElement;
 };
 
-var fragment = document.createDocumentFragment();
+var renderPins = function (pins) {
+  var fragment = document.createDocumentFragment();
 
-for (var i = 1; i <= QUANTITY_OF_PINS; i++) {
-  fragment.appendChild(renderPinMap());
+  for (var i = 0; i < pins.length; i++) {
+    var filledPin = getFilledPin(pins[i]);
+    fragment.appendChild(filledPin);
+  }
   pinsList.appendChild(fragment);
-}
+};
+
+renderPins(getPinsMap());
