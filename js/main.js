@@ -42,7 +42,7 @@ var getLocation = function (min, max, ymin, ymax) {
   return getRandomFromInterval(min, max) - (PIN_SIZE.width / 2) + ', ' + (getRandomFromInterval(ymin, ymax) - PIN_SIZE.height);
 };
 
-var lOCATIONMINMAX = {
+var LOCATIONMINMAX = {
   X: {
     MIN: 300,
     MAX: 900
@@ -111,7 +111,7 @@ var getOffersOptions = function () {
 
     offer: {
       title: getTitle(TITLES),
-      address: getLocation(lOCATIONMINMAX.X.MIN, lOCATIONMINMAX.X.MAX, lOCATIONMINMAX.Y.MIN, lOCATIONMINMAX.Y.MIN),
+      address: getLocation(LOCATIONMINMAX.X.MIN, LOCATIONMINMAX.X.MAX, LOCATIONMINMAX.Y.MIN, LOCATIONMINMAX.Y.MIN),
       price: getRandomFromInterval(1000, 10000),
       type: getRandomArray(TYPES),
       rooms: getRandomFromInterval(1, 4),
@@ -134,34 +134,63 @@ var getPinsMap = function () {
   var pins = [];
 
   for (var i = 0; i < QUANTITY_OF_PINS; i++) {
-    var pin = {
-      pinStyle: 'left: ' + getOffersOptions().location.x + 'px' + '; ' + 'top: ' + getOffersOptions().location.x + 'px' + ';',
-      srcAvatar: getOffersOptions().author.avatar,
-      altTitle: getOffersOptions().offer.title
-    };
-    pins.push(pin);
+    pins.push(getOffersOptions());
   }
   return pins;
 };
 
-var getFilledPin = function (array) {
+// var getPinsMap = function () {
+//   var pins = [];
+
+//   for (var i = 0; i < QUANTITY_OF_PINS; i++) {
+//     var pin = {
+//       pinStyle: 'left: ' + getOffersOptions().location.x + 'px' + '; ' + 'top: ' + getOffersOptions().location.x + 'px' + ';',
+//       srcAvatar: getOffersOptions().author.avatar,
+//       altTitle: getOffersOptions().offer.title
+//     };
+//     pins.push(pin);
+//   }
+//   return pins;
+// };
+
+var getFilledPin = function () {
+
+
+var filledPins = [];
+
+for (var i = 0; i < getPinsMap().length; i++) {
+
+
   var newPinElement = mapPinTemplate.cloneNode(true);
 
-  newPinElement.style = array.pinStyle;
-  newPinElement.querySelector('img').src = array.srcAvatar;
-  newPinElement.querySelector('img').alt = array.altTitle;
+  newPinElement.style = 'left: ' + getPinsMap()[i].location.x + 'px' + '; ' + 'top: ' + getPinsMap()[i].location.x + 'px' + ';';
+  newPinElement.querySelector('img').src = getPinsMap()[i].author.avatar;
+  newPinElement.querySelector('img').alt = getPinsMap()[i].offer.title;
 
-  return newPinElement;
+  filledPins.push(newPinElement);
+}
+  return filledPins;
 };
 
-var renderPins = function (pins) {
+
+
+// var getFilledPin = function (offer) {
+
+//   var newPinElement = mapPinTemplate.cloneNode(true);
+
+//   newPinElement.style = offer.pinStyle;
+//   newPinElement.querySelector('img').src = offer.srcAvatar;
+//   newPinElement.querySelector('img').alt = offer.altTitle;
+
+//   return newPinElement;
+// };
+
+var renderPins = function () {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < pins.length; i++) {
-    var filledPin = getFilledPin(pins[i]);
-    fragment.appendChild(filledPin);
-  }
+  fragment.appendChild(getFilledPin());
+
   pinsList.appendChild(fragment);
 };
 
-renderPins(getPinsMap());
+renderPins();
