@@ -139,58 +139,21 @@ var getPinsMap = function () {
   return pins;
 };
 
-// var getPinsMap = function () {
-//   var pins = [];
-
-//   for (var i = 0; i < QUANTITY_OF_PINS; i++) {
-//     var pin = {
-//       pinStyle: 'left: ' + getOffersOptions().location.x + 'px' + '; ' + 'top: ' + getOffersOptions().location.x + 'px' + ';',
-//       srcAvatar: getOffersOptions().author.avatar,
-//       altTitle: getOffersOptions().offer.title
-//     };
-//     pins.push(pin);
-//   }
-//   return pins;
-// };
-
 var getFilledPin = function () {
 
+  for (var i = 0; i < getPinsMap().length; i++) {
 
-var filledPins = [];
+    var newPinElement = mapPinTemplate.cloneNode(true);
 
-for (var i = 0; i < getPinsMap().length; i++) {
-
-
-  var newPinElement = mapPinTemplate.cloneNode(true);
-
-  newPinElement.style = 'left: ' + getPinsMap()[i].location.x + 'px' + '; ' + 'top: ' + getPinsMap()[i].location.x + 'px' + ';';
-  newPinElement.querySelector('img').src = getPinsMap()[i].author.avatar;
-  newPinElement.querySelector('img').alt = getPinsMap()[i].offer.title;
-
-  filledPins.push(newPinElement);
-}
-  return filledPins;
+    newPinElement.style = 'left: ' + getPinsMap()[i].location.x + 'px' + '; ' + 'top: ' + getPinsMap()[i].location.x + 'px' + ';';
+    newPinElement.querySelector('img').src = getPinsMap()[i].author.avatar;
+    newPinElement.querySelector('img').alt = getPinsMap()[i].offer.title;
+  }
+  return newPinElement;
 };
 
-
-
-// var getFilledPin = function (offer) {
-
-//   var newPinElement = mapPinTemplate.cloneNode(true);
-
-//   newPinElement.style = offer.pinStyle;
-//   newPinElement.querySelector('img').src = offer.srcAvatar;
-//   newPinElement.querySelector('img').alt = offer.altTitle;
-
-//   return newPinElement;
-// };
-
-var renderPins = function () {
-  var fragment = document.createDocumentFragment();
-
+var fragment = document.createDocumentFragment();
+for (var i = 0; i < 8; i++) {
   fragment.appendChild(getFilledPin());
-
   pinsList.appendChild(fragment);
-};
-
-renderPins();
+}
