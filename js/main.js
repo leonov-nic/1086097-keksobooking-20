@@ -139,21 +139,30 @@ var getPinsMap = function () {
   return pins;
 };
 
-var getFilledPin = function () {
+var getFilledPin = function (array) {
 
-  for (var i = 0; i < getPinsMap().length; i++) {
-
+  for (var i = 0; i < array.length; i++) {
     var newPinElement = mapPinTemplate.cloneNode(true);
 
-    newPinElement.style = 'left: ' + getPinsMap()[i].location.x + 'px' + '; ' + 'top: ' + getPinsMap()[i].location.x + 'px' + ';';
-    newPinElement.querySelector('img').src = getPinsMap()[i].author.avatar;
-    newPinElement.querySelector('img').alt = getPinsMap()[i].offer.title;
+    newPinElement.style = 'left: ' + array[i].location.x + 'px' + '; ' + 'top: ' + array[i].location.x + 'px' + ';';
+    newPinElement.querySelector('img').src = array[i].author.avatar;
+    newPinElement.querySelector('img').alt = array[i].offer.title;
   }
   return newPinElement;
 };
 
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < 8; i++) {
-  fragment.appendChild(getFilledPin());
-  pinsList.appendChild(fragment);
-}
+var renderPins = function () {
+  var pins = [];
+  pins = getPinsMap();
+
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < pins.length; i++) {
+    fragment.appendChild(getFilledPin(pins));
+    pinsList.appendChild(fragment);
+  }
+
+  return fragment;
+};
+
+renderPins();
