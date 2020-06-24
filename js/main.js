@@ -147,9 +147,10 @@ var getFilledPin = function (pin) {
   return newPinElement;
 };
 
-var renderPins = function () {
-  var pins = [];
-  pins = getPinsMap();
+var PINS = [];
+PINS = getPinsMap();
+
+var renderPins = function (pins) {
 
   var fragment = document.createDocumentFragment();
 
@@ -160,4 +161,4 @@ var renderPins = function () {
   return fragment;
 };
 
-renderPins();
+renderPins(PINS);
