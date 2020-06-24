@@ -139,15 +139,11 @@ var getPinsMap = function () {
   return pins;
 };
 
-var getFilledPin = function (array) {
-
-  for (var i = 0; i < array.length; i++) {
-    var newPinElement = mapPinTemplate.cloneNode(true);
-
-    newPinElement.style = 'left: ' + array[i].location.x + 'px' + '; ' + 'top: ' + array[i].location.x + 'px' + ';';
-    newPinElement.querySelector('img').src = array[i].author.avatar;
-    newPinElement.querySelector('img').alt = array[i].offer.title;
-  }
+var getFilledPin = function (pin) {
+  var newPinElement = mapPinTemplate.cloneNode(true);
+  newPinElement.style = 'left: ' + pin.location.x + 'px' + '; ' + 'top: ' + pin.location.x + 'px' + ';';
+  newPinElement.querySelector('img').src = pin.author.avatar;
+  newPinElement.querySelector('img').alt = pin.offer.title;
   return newPinElement;
 };
 
@@ -158,10 +154,9 @@ var renderPins = function () {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < pins.length; i++) {
-    fragment.appendChild(getFilledPin(pins));
+    fragment.appendChild(getFilledPin(pins[i]));
     pinsList.appendChild(fragment);
   }
-
   return fragment;
 };
 
