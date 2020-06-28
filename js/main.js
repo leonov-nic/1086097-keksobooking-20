@@ -66,9 +66,9 @@ var TITLES = [
 
 var TYPES = [
   'palace',
-  ' flat',
-  ' house',
-  ' bungalo'
+  'flat',
+  'house',
+  'bungalo'
 ];
 var CHECKIN = [
   '12:00',
@@ -84,11 +84,11 @@ var CHECKOUT = [
 
 var FEATURES = [
   'wifi',
-  ' dishwasher',
-  ' parking',
-  ' washer',
-  ' elevator',
-  ' conditioner'
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
 ];
 var DESCRIPTIONS = [
   'офигенный',
@@ -163,48 +163,102 @@ var renderPins = function (pins) {
 
 renderPins(PINS);
 
-var getSelectType = function (element) {
-  if (element.querySelector('.popup__type').textContent === 'palace') {
-    element.querySelector('.popup__type').textContent = 'Дворец';
-  } else if (element.querySelector('.popup__type').textContent === 'palace, flat') {
-    element.querySelector('.popup__type').textContent = 'Дворец, ' + 'Комната';
-  } else if (element.querySelector('.popup__type').textContent === 'palace, flat, house') {
-    element.querySelector('.popup__type').textContent = 'Дворец, ' + 'Комната, ' + 'Дом';
-  } else if (element.querySelector('.popup__type').textContent === 'palace, flat, house, bungalo') {
-    element.querySelector('.popup__type').textContent = 'Дворец, ' + 'Комната, ' + 'Дом, ' + 'Бунгало';
+// var getSelectTypeAppartamet = function (types) {
+
+//   var newTypes = [];
+
+//   for (var i = 0; i < types.length; i++) {
+//     if (types[i] === 'palace') {
+//       types[i] = 'Дворец';
+//     } else if (types[i] === 'flat') {
+//       types[i] = 'Комната';
+//     } else if (types[i] === 'house') {
+//       types[i] = 'Дом';
+//     } else if (types[i] === 'bungalo') {
+//       types[i] = 'Бунгало';
+//     }
+//     newTypes.push(' ' + types[i]);
+//   }
+//   return newTypes;
+// };
+
+var getSelectTypeAppartamet = function (types) {
+
+  var newTypes = [];
+
+  for (var i = 0; i < types.length; i++) {
+
+    switch (types[i]) {
+      case 'palace':
+        types[i] = 'Дворец';
+        break;
+      case 'flat':
+        types[i] = 'Комната';
+        break;
+      case 'house':
+        types[i] = 'Дом';
+        break;
+      case 'bungalo':
+        types[i] = 'Бунгало';
+        break;
+    }
+
+    newTypes.push(' ' + types[i]);
   }
+  return newTypes;
 };
 
+var filterContainer = map.querySelector('.map__filters-container');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-var newCardTemplate = cardTemplate.cloneNode(true);
+var addFoto = function (fotos) {
 
-newCardTemplate.querySelector('.popup__title').textContent = getPinsMap()[0].offer.title;
-newCardTemplate.querySelector('.popup__text--address').textContent = getPinsMap()[0].offer.address;
-newCardTemplate.querySelector('.popup__text--price').innerHTML = getPinsMap()[0].offer.price + ' &#8381;/ночь';
-newCardTemplate.querySelector('.popup__type').textContent = getPinsMap()[0].offer.type;
-getSelectType(newCardTemplate);
-newCardTemplate.querySelector('.popup__text--capacity').textContent = getPinsMap()[0].offer.rooms + ' комнаты для ' + getPinsMap()[0].offer.guests + ' гостей';
-newCardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + getPinsMap()[0].offer.checkin + ' выезд до ' + getPinsMap()[0].offer.checkout;
-newCardTemplate.querySelector('.popup__features').textContent = getPinsMap()[0].offer.feature;
-newCardTemplate.querySelector('.popup__description').textContent = getPinsMap()[0].offer.description;
+  var newArray = [];
+  newArray = fotos;
+  cardTemplate.querySelector('.popup__photos').querySelector('img').src = fotos[0];
 
-var arrayFotos = getPinsMap()[0].offer.photo;
-newCardTemplate.querySelector('.popup__photos').querySelector('img').src = arrayFotos[0];
-// console.log(arrayFotos[0]);
-// console.log(arrayFotos.length);
-if (arrayFotos.length > 1) {
-  for (var j = 0; j < arrayFotos.length - 1; j++) {
-    var newImg = '<img src="' + arrayFotos[j + 1] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
-
-    newCardTemplate.querySelector('.popup__photos').insertAdjacentHTML('beforeend', newImg);
+  for (var j = 1; j < newArray.length; j++) {
+    var oldFotos = cardTemplate.querySelector('.popup__photos');
+    var newFoto = cardTemplate.querySelector('.popup__photos').querySelector('img').cloneNode(true);
+    oldFotos.appendChild(newFoto);
+    newFoto.src = newArray[j];
   }
-}
-newCardTemplate.querySelector('.popup__avatar').src = getPinsMap()[0].author.avatar;
+// return console.log(oldFotos);
+};
+
+addFoto(getPinsMap()[0].offer.photo);
+
+var getNewCard = function (offer) {
+
+  var newCardTemplate = cardTemplate.cloneNode(true);
+
+  newCardTemplate.querySelector('.popup__title').textContent = offer.offer.title;
+  newCardTemplate.querySelector('.popup__text--address').textContent = offer.offer.address;
+  newCardTemplate.querySelector('.popup__text--price').innerHTML = offer.offer.price + ' &#8381;/ночь';
+  newCardTemplate.querySelector('.popup__type').textContent = getSelectTypeAppartamet(offer.offer.type);
+
+  newCardTemplate.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
+  newCardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.offer.checkin + ' выезд до ' + offer.offer.checkout;
+  newCardTemplate.querySelector('.popup__features').textContent = offer.offer.feature;
+  newCardTemplate.querySelector('.popup__description').textContent = offer.offer.description;
+  // var fotos = offer.offer.photo;
+  // newCardTemplate.querySelector('.popup__photos').querySelector('img').src = fotos[0];
+
+  // console.log(fotos[0]);
+  // console.log(fotos.length);
+
+  // if (fotos.length > 1) {
+  //   for (var j = 0; j < fotos.length - 1; j++) {
+  //     var newImg = '<img src="' + fotos[j + 1] + '" class="popup__photo" width="45" height="40" alt="Фотография жилья">';
+
+  //     newCardTemplate.querySelector('.popup__photos').insertAdjacentHTML('beforeend', newImg);
+  //   }
+  // }
+  // newCardTemplate.querySelector('.popup__avatar').src = offer.author.avatar;
+  return newCardTemplate;
+};
 
 
-var filterContainer = map.querySelector('.map__filters-container');
+map.appendChild(getNewCard(getPinsMap()[0]), filterContainer);
 
-map.appendChild(newCardTemplate, filterContainer);
-
-// console.log(newCardTemplate);
+// console.log(getNewCard(getPinsMap()[0]));
