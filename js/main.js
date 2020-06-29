@@ -211,22 +211,44 @@ var getSelectTypeAppartamet = function (types) {
 var filterContainer = map.querySelector('.map__filters-container');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
-var addFoto = function (fotos) {
+var addPhoto = function (fotos) {
 
-  var newArray = [];
-  newArray = fotos;
-  cardTemplate.querySelector('.popup__photos').querySelector('img').src = fotos[0];
+  // var newArray = [];
+  // newArray = fotos;
+  // cardTemplate.querySelector('.popup__photos').querySelector('img').src = fotos[0];
 
-  for (var j = 1; j < newArray.length; j++) {
-    var oldFotos = cardTemplate.querySelector('.popup__photos');
-    var newFoto = cardTemplate.querySelector('.popup__photos').querySelector('img').cloneNode(true);
-    oldFotos.appendChild(newFoto);
-    newFoto.src = newArray[j];
+  // var oldFotos = cardTemplate.querySelector('.popup__photos');
+  var foto = cardTemplate.querySelector('.popup__photos').querySelector('img').cloneNode(true);
+  var fragment = document.createDocumentFragment();
+
+  for (var j = 0; j < fotos.length; j++) {
+    foto.src = fotos[j];
+    var newFoto = foto;
+    fragment.appendChild(newFoto);
   }
-// return console.log(oldFotos);
+
+  console.log(fragment);
+return fragment;
 };
 
-addFoto(getPinsMap()[0].offer.photo);
+console.log(getPinsMap()[0].offer.photo);
+console.log(addPhoto(getPinsMap()[0].offer.photo));
+
+var getFeatures = function (features) {
+  var element = cardTemplate.querySelector('.popup__feature');
+  var listFeatures = cardTemplate.querySelector('.popup__features');
+
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < features.length; i++) {
+    var newElement = element.cloneNode();
+    newElement.className = 'popup__feature' + ' ' + 'popup__feature--' + features[i];
+    fragment.appendChild(newElement);
+  }
+  // newElements.appendChild(fragment);
+  // console.log(fragment);
+  // return newElements;
+  return fragment;
+};
 
 var getNewCard = function (offer) {
 
@@ -234,12 +256,17 @@ var getNewCard = function (offer) {
 
   newCardTemplate.querySelector('.popup__title').textContent = offer.offer.title;
   newCardTemplate.querySelector('.popup__text--address').textContent = offer.offer.address;
-  newCardTemplate.querySelector('.popup__text--price').innerHTML = offer.offer.price + ' &#8381;/ночь';
+  newCardTemplate.querySelector('.popup__text--price').insertAdjacentHTML = offer.offer.price + ' &#8381;/ночь';
   newCardTemplate.querySelector('.popup__type').textContent = getSelectTypeAppartamet(offer.offer.type);
 
   newCardTemplate.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
   newCardTemplate.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.offer.checkin + ' выезд до ' + offer.offer.checkout;
-  newCardTemplate.querySelector('.popup__features').textContent = offer.offer.feature;
+
+  var listFeatures = newCardTemplate.querySelector('.popup__features');
+  newCardTemplate.replaceChild(listFeatures.cloneNode(), listFeatures);
+  var listNewFeatures = newCardTemplate.querySelector('.popup__features');
+  listNewFeatures.appendChild(getFeatures(offer.offer.feature));
+
   newCardTemplate.querySelector('.popup__description').textContent = offer.offer.description;
   // var fotos = offer.offer.photo;
   // newCardTemplate.querySelector('.popup__photos').querySelector('img').src = fotos[0];
