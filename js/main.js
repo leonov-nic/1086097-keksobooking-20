@@ -228,11 +228,8 @@ var addPhoto = function (photos) {
   return fragment;
 };
 
-console.log(addPhoto(getPinsMap()[0].offer.photo));
-
 var getFeatures = function (features) {
   var element = cardTemplate.querySelector('.popup__feature');
-  var listFeatures = cardTemplate.querySelector('.popup__features');
 
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < features.length; i++) {
