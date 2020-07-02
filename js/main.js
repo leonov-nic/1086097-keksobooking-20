@@ -70,6 +70,7 @@ var TYPES = [
   'house',
   'bungalo'
 ];
+
 var CHECKIN = [
   '12:00',
   '13:00',
@@ -113,7 +114,7 @@ var getOffersOptions = function () {
       title: getTitle(TITLES),
       address: getLocation(LOCATIONMINMAX.X.MIN, LOCATIONMINMAX.X.MAX, LOCATIONMINMAX.Y.MIN, LOCATIONMINMAX.Y.MIN),
       price: getRandomFromInterval(1000, 10000),
-      type: getRandomArray(TYPES),
+      type: getRandomElement(TYPES),
       rooms: getRandomFromInterval(1, 4),
       guests: getRandomFromInterval(1, 8),
       checkin: getRandomElement(CHECKIN),
@@ -182,31 +183,50 @@ renderPins(PINS);
 //   return newTypes;
 // };
 
-var getTypeAppartamet = function (types) {
+var getTypeAppartamet = function (type) {
 
-  var newTypes = [];
-
-  for (var i = 0; i < types.length; i++) {
-
-    switch (types[i]) {
-      case 'palace':
-        types[i] = 'Дворец';
-        break;
-      case 'flat':
-        types[i] = 'Комната';
-        break;
-      case 'house':
-        types[i] = 'Дом';
-        break;
-      case 'bungalo':
-        types[i] = 'Бунгало';
-        break;
-    }
-
-    newTypes.push(' ' + types[i]);
+  switch (type) {
+    case 'palace':
+      type = 'Дворец';
+      break;
+    case 'flat':
+      type = 'Комната';
+      break;
+    case 'house':
+      type = 'Дом';
+      break;
+    case 'bungalo':
+      type = 'Бунгало';
+      break;
   }
-  return newTypes;
+  return type;
 };
+
+// var getTypeAppartamet = function (types) {
+
+//   var newTypes = [];
+
+//   for (var i = 0; i < types.length; i++) {
+
+//     switch (types[i]) {
+//       case 'palace':
+//         types[i] = 'Дворец';
+//         break;
+//       case 'flat':
+//         types[i] = 'Комната';
+//         break;
+//       case 'house':
+//         types[i] = 'Дом';
+//         break;
+//       case 'bungalo':
+//         types[i] = 'Бунгало';
+//         break;
+//     }
+
+//     newTypes.push(' ' + types[i]);
+//   }
+//   return newTypes;
+// };
 
 var filterContainer = map.querySelector('.map__filters-container');
 var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
