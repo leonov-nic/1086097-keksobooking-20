@@ -1,7 +1,7 @@
 'use strict';
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+// map.classList.remove('map--faded');
 
 var pinsList = document.querySelector('.map__pins');
 
@@ -284,7 +284,103 @@ var getNewCard = function (offer) {
   return newCardTemplate;
 };
 
-
 map.appendChild(getNewCard(getPinsMap()[0]), filterContainer);
 
-// console.log(getNewCard(getPinsMap()[0]));
+// ЧЕТВЕРТОЕ ДЗ
+
+var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var adFormHeaderFieldset = document.querySelector('.ad-form-header');
+var adFormFieldset = document.querySelectorAll('.ad-form__element');
+
+mapPinMain.addEventListener('mouseup', logMouseButton);
+
+function logMouseButton(e) {
+  if (typeof e === 'object') {
+    switch (e.button) {
+      case 0:
+        activationForm();
+        renderPins(PINS);
+        break;
+      // case 1:
+      //   log.textContent = 'Middle button clicked.';
+      //   console.log("центр");
+      //   break;
+      // case 2:
+      //   log.textContent = 'Right button clicked.';
+      //   console.log("правая");
+      //   break;
+      default:
+        // alert("нажмите левую нопку мышки");
+    }
+  }
+}
+
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    activationForm();
+  }
+
+});
+
+var activationForm = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  for (var i = 0; i < adFormFieldset.length; i++) {
+    adFormFieldset[i].disabled = false;
+  }
+  adFormHeaderFieldset.removeAttribute('disabled', 'disabled');
+  mapPinMain.style.left = getOffersOptions().location.x + "px";
+  mapPinMain.style.top =  getOffersOptions().location.y + "px";;
+};
+
+var numberOfRooms = document.querySelector('#room_number');
+var numberOfGuests = document.querySelector('#capacity');
+
+numberOfRooms.addEventListener('change', function () {
+  var rooms = numberOfRooms.value;
+  var guests = numberOfGuests.value;
+
+console.log(rooms);
+console.log(guests);
+
+  if (rooms !== guests) {
+    alert('Количество гостей не соответствует колличесву комнат');
+  }
+
+  else {
+     alert('норм');
+  }
+});
+
+numberOfGuests.addEventListener('change', function () {
+
+    var rooms = numberOfRooms.value;
+    var guests = numberOfGuests.value;
+
+  if (rooms !== guests) {
+    alert('Количество комнат не соответствует колличесву комнат');
+  }
+  else {
+     alert('норм');
+  }
+});
+
+
+
+// console.log(numberOfRooms.value);
+
+
+// let articles = document.querySelectorAll('.news-block');
+// let filter = document.querySelector('.filter');
+
+// filter.onchange = function () {
+//   for (let article of articles) {
+//     if (article.dataset.category !== filter.value && filter.value !== 'all') {
+//       article.classList.add('hidden');
+//     } else {
+//       article.classList.remove('hidden');
+//     }
+//   }
+// };
+
