@@ -162,7 +162,7 @@ var renderPins = function (pins) {
   return fragment;
 };
 
-renderPins(PINS);
+// renderPins(PINS);
 
 // var getSelectTypeAppartamet = function (types) {
 
@@ -292,88 +292,90 @@ var mapPinMain = document.querySelector('.map__pin--main');
 var adForm = document.querySelector('.ad-form');
 var adFormHeaderFieldset = document.querySelector('.ad-form-header');
 var adFormFieldset = document.querySelectorAll('.ad-form__element');
+var mapForm = document.querySelector('.map__filters');
+
+adFormHeaderFieldset.disabled = true;
+adFormFieldset.disabled = true;
+adForm.classList.add('ad-form--disabled');
+mapForm.classList.add('ad-form--disabled');
 
 mapPinMain.addEventListener('mouseup', logMouseButton);
 
+var LEFTMOUSEBUTTON = 0;
+
 function logMouseButton(e) {
-  if (typeof e === 'object') {
-    switch (e.button) {
-      case 0:
-        activationForm();
-        renderPins(PINS);
-        break;
-      // case 1:
-      //   log.textContent = 'Middle button clicked.';
-      //   console.log('центр');
-      //   break;
-      // case 2:
-      //   log.textContent = 'Right button clicked.';
-      //   console.log('правая');
-      //   break;
-      default:
-        // alert('нажмите левую нопку мышки');
-    }
+  if (e.button === LEFTMOUSEBUTTON) {
+    toggle(false);
+    renderPins(PINS);
   }
 }
 
+// function logMouseButton(e) {
+//   if (typeof e === 'object') {
+//     switch (e.button) {
+//       case 0:
+//         toggle(false);
+//         renderPins(PINS);
+//         break;
+//       // case 1:
+//       //   log.textContent = 'Middle button clicked.';
+//       //   console.log('центр');
+//       //   break;
+//       // case 2:
+//       //   log.textContent = 'Right button clicked.';
+//       //   console.log('правая');
+//       //   break;
+//       default:
+//         // alert('нажмите левую нопку мышки');
+//     }
+//   }
+// }
+
 mapPinMain.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
-    activationForm();
+    toggle(false);
+    renderPins(PINS);
   }
-
 });
 
-var activationForm = function () {
-  map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
+var getPinMainLocation = function () {
+  mapPinMain.style.left = getOffersOptions().location.x - (PIN_SIZE.width / 2) + 'px';
+  mapPinMain.style.top = getOffersOptions().location.y - PIN_SIZE.height + 'px';
+};
+
+var activationForm = function (disabled) {
   for (var i = 0; i < adFormFieldset.length; i++) {
-    adFormFieldset[i].disabled = false;
+    adFormFieldset[i].disabled = disabled;
   }
   adFormHeaderFieldset.removeAttribute('disabled', 'disabled');
-  mapPinMain.style.left = getOffersOptions().location.x + 'px';
-  mapPinMain.style.top = getOffersOptions().location.y + 'px';
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  mapForm.classList.remove('ad-form--disabled');
 };
+
+var toggle = function (disabled) {
+  activationForm(disabled);
+  getPinMainLocation();
+};
+
+// С ВАЛИДНОСТЬЮ ПОЛНАЯ Ж
 
 var numberOfRooms = document.querySelector('#room_number');
 var numberOfGuests = document.querySelector('#capacity');
-
-numberOfRooms.addEventListener('change', function () {
-  var rooms = numberOfRooms.value;
-  var guests = numberOfGuests.value;
-
-  if (rooms !== guests) {
-    alert('Количество гостей не соответствует колличесву комнат');
-  }
-
-  else {
-    alert('норм');
-  }
+console.log(numberOfRooms);
+console.log(numberOfGuests);
+console.log(numberOfRooms.value);
+console.log(numberOfGuests.value);
+numberOfRooms.addEventListener('change', function (evt) {
+console.log(evt.target.value);
+console.log(numberOfRooms.validity.valid);
 });
 
-numberOfGuests.addEventListener('change', function () {
+// numberOfRooms.addEventListener('valid', function (evt) {
+//   numberOfRooms.value === 2;
+// });
 
-  var rooms = numberOfRooms.value;
-  var guests = numberOfGuests.value;
+// console.log(numberOfRooms.validity.valid);
 
-  if (rooms !== guests) {
-    alert('Количество комнат не соответствует колличесву комнат');
-  }
-  else {
-    alert('норм');
-  }
-});
 
-// console.log(numberOfRooms.value);
 
-// let articles = document.querySelectorAll('.news-block');
-// let filter = document.querySelector('.filter');
-
-// filter.onchange = function () {
-//   for (let article of articles) {
-//     if (article.dataset.category !== filter.value && filter.value !== 'all') {
-//       article.classList.add('hidden');
-//     } else {
-//       article.classList.remove('hidden');
-//     }
-//   }
-// };
