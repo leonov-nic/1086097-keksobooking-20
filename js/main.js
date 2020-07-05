@@ -363,95 +363,52 @@ var toggle = function (disabled) {
 var numberOfRooms = document.querySelector('#room_number');
 var numberOfGuests = document.querySelector('#capacity');
 
-
-
 var validateGuests = function (target) {
 
-  if ((target.value === '1') !== (numberOfGuests.value === '1')) {
-     console.log('единица');
-     numberOfGuests.setCustomValidity('Количество гостей не соотвествует')
-  }  else if ((target.value === '2') !== (numberOfGuests.value === '1') || (target.value === '2') !== (numberOfGuests.value === '2')) {
-     console.log('двойка');
-     numberOfGuests.setCustomValidity('Количество гостей не соотвествует')
-  }  else if ((target.value === '3') === (numberOfGuests.value === '0')) {
-     console.log('тройка');
-     numberOfGuests.setCustomValidity('Количество гостей не соотвествует')
-  }  else if ((target.value === '100') !== (numberOfGuests.value === '0')) {
-     console.log('четверка');
-     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-  }
-  else {
-    console.log('все норм');
-    numberOfGuests.setCustomValidity('')
+  if (target.value === '1' && numberOfGuests.value !== '1') {
+    // console.log('единица');
+    numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+  } else if (target.value === '2' && numberOfGuests.value !== '1' && numberOfGuests.value !== '2') {
+    // console.log('двойка');
+    numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+  } else if (target.value === '3' && numberOfGuests.value === '0') {
+    // console.log('тройка');
+    numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+  } else if (target.value === '100' && numberOfGuests.value !== '0') {
+    // console.log('четверка');
+    numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+  } else {
+    // console.log('все норм');
+    numberOfGuests.setCustomValidity('');
   }
 };
 
 var validateRooms = function (target) {
 
-  if ((target.value === '1') !== (numberOfRooms.value === '1')) {
-     console.log('единица гости');
-     numberOfRooms.setCustomValidity('Количество комнат не соотвествует')
-  }  else if ((target.value === '2') !== (numberOfRooms.value === '2') || (target.value === '2') !== (numberOfRooms.value === '3')) {
-     console.log('двойка гости');
-     numberOfRooms.setCustomValidity('Количество комнат не соотвествует')
-  }  else if (target.value === '3' !== numberOfRooms.value === '3') {
-     console.log('тройка гости');
-     numberOfRooms.setCustomValidity('Количество комнат не соотвествует')
-  }  else if ((target.value === '0') !== (numberOfRooms.value === '100')) {
-     console.log('четверка гости');
-     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-  }
-  else {
-    console.log('все норм');
-    numberOfRooms.setCustomValidity('')
+  if (target.value === '1' && numberOfRooms.value === '100') {
+    // console.log('единица гости');
+    numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+  } else if (target.value === '2' && numberOfRooms.value !== '2' && numberOfRooms.value !== '3') {
+    // console.log('двойка гости');
+    numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+  } else if (target.value === '3' && numberOfRooms.value !== '3') {
+    // console.log('тройка гости');
+    numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+  } else if (target.value === '0' && numberOfRooms.value !== '100') {
+    // console.log('четверка гости');
+    numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+  } else {
+    // console.log('все норм');
+    numberOfRooms.setCustomValidity('');
   }
 };
 
-
 var setField = function (evt) {
-  if (evt.target === numberOfRooms)  {
+  if (evt.target === numberOfRooms) {
     validateGuests(evt.target);
-  }
-
-  else {
-    evt.target === numberOfGuests;
+  } else if (evt.target === numberOfGuests) {
     validateRooms(evt.target);
   }
-
-  // console.log(evt.target);
 };
 
 adForm.addEventListener('change', setField);
-
-
-
-
-
-
-// var validateInput = function (value) {
-//   if (value !== 'any value') {
-//     input.setCustomValidity('Not any value');
-// }
-
-// var setForm = function (evt) {
-//   if(evt.target === input) {
-//     validateInput(input.value);
-//   }
-// }
-
-// form.addEventListeren('change', setForm);
-
-
-
-
-
-
-// var roomNumber = form.querySelector('#room_number');
-
-
-// numberOfRooms.addEventListener('change', function (evt) {
-
-//   if (evt.target.value === numberOfGuests.value) {
-//     numberOfGuests.setCustomValidity('неправильное значение гостей');
-//   }
-// });
