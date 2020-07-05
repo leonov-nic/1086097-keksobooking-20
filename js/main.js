@@ -362,13 +362,16 @@ var toggle = function (disabled) {
 
 var numberOfRooms = document.querySelector('#room_number');
 var numberOfGuests = document.querySelector('#capacity');
-console.log(numberOfRooms);
-console.log(numberOfGuests);
-console.log(numberOfRooms.value);
-console.log(numberOfGuests.value);
+// console.log(numberOfRooms);
+// console.log(numberOfGuests);
+// console.log(numberOfRooms.value);
+// console.log(numberOfGuests.value);
+
 numberOfRooms.addEventListener('change', function (evt) {
-console.log(evt.target.value);
-console.log(numberOfRooms.validity.valid);
+
+  if (evt.target.value !== numberOfGuests.value) {
+    numberOfGuests.setCustomValidity('неправильное значение гостей');
+  }
 });
 
 // numberOfRooms.addEventListener('valid', function (evt) {
@@ -376,6 +379,3 @@ console.log(numberOfRooms.validity.valid);
 // });
 
 // console.log(numberOfRooms.validity.valid);
-
-
-
