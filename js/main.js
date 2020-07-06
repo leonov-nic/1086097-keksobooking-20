@@ -358,15 +358,15 @@ var toggle = function (disabled) {
   getPinMainLocation();
 };
 
-var ONE_GUEST = '1';
-var TWO_GUESTS = '2';
-var THREE_GUESTS = '3';
-var NO_GUESTS = '0';
+// var ONE_GUEST = '1';
+// var TWO_GUESTS = '2';
+// var THREE_GUESTS = '3';
+// var NO_GUESTS = '0';
 
-var ONE_ROOM = '1';
-var TWO_ROOMS = '2';
-var THREE_ROOMS = '3';
-var ONE_HUNDRED_ROOMS = '100';
+// var ONE_ROOM = '1';
+// var TWO_ROOMS = '2';
+// var THREE_ROOMS = '3';
+// var ONE_HUNDRED_ROOMS = '100';
 
 var GuestsRooms = {
   1: ['1'],
@@ -379,8 +379,8 @@ var numberOfRooms = document.querySelector('#room_number');
 var numberOfGuests = document.querySelector('#capacity');
 
 var validateField = function (target) {
-    console.log(target);
-    target.setCustomValidity('');
+  numberOfRooms.setCustomValidity('');
+  numberOfGuests.setCustomValidity('');
   if (!GuestsRooms[numberOfRooms.value].includes(numberOfGuests.value)) {
     target.setCustomValidity('Количество не соотвествует');
   } else {
@@ -394,10 +394,12 @@ var setField = function (evt) {
   }
 };
 
-
 adForm.addEventListener('change', setField);
 
 // var validateGuests = function () {
+
+// numberOfGuests.setCustomValidity('');
+// numberOfRooms.setCustomValidity('');
 
 //   if ((numberOfRooms.value === ONE_ROOM) && (numberOfGuests.value !== ONE_GUEST)) {
 //     console.log('единица');
@@ -419,10 +421,13 @@ adForm.addEventListener('change', setField);
 
 // var validateRooms = function () {
 
+// numberOfRooms.setCustomValidity('');
+// numberOfRooms.setCustomValidity('');
+
 //   if ((numberOfGuests.value === ONE_GUEST) && (numberOfRooms.value === ONE_HUNDRED_ROOMS)) {
 //     // console.log('единица гости');
 //     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-//   } else if ((numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== ONE_ROOM) || (numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== TWO_ROOMS)) {
+//   } else if ((numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== TWO_ROOMS) || (numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== THREE_ROOMS)) {
 //     // console.log('двойка гости');
 //     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
 //   } else if ((numberOfGuests.value === THREE_GUESTS) && (numberOfRooms.value !== THREE_ROOMS)) {
@@ -445,4 +450,4 @@ adForm.addEventListener('change', setField);
 //   }
 // };
 
-
+// adForm.addEventListener('change', setField);
