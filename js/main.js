@@ -379,6 +379,8 @@ var numberOfRooms = document.querySelector('#room_number');
 var numberOfGuests = document.querySelector('#capacity');
 
 var validateField = function (target) {
+    console.log(target);
+    target.setCustomValidity('');
   if (!GuestsRooms[numberOfRooms.value].includes(numberOfGuests.value)) {
     target.setCustomValidity('Количество не соотвествует');
   } else {
@@ -388,7 +390,6 @@ var validateField = function (target) {
 
 var setField = function (evt) {
   if (evt.target === numberOfRooms || evt.target === numberOfGuests) {
-    evt.target.setCustomValidity('');
     validateField(evt.target);
   }
 };
