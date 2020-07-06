@@ -368,21 +368,21 @@ var TWO_ROOMS = '2';
 var THREE_ROOMS = '3';
 var ONE_HUNDRED_ROOMS = '100';
 
-var guestsRooms = {
-  1: [1],
-  2: [1, 2],
-  3: [1, 2, 3],
-  100: [0]
+var GuestsRooms = {
+  1: ['1'],
+  2: ['1', '2'],
+  3: ['1', '2', '3'],
+  100: ['0']
 };
 
 var numberOfRooms = document.querySelector('#room_number');
 var numberOfGuests = document.querySelector('#capacity');
 
 var valid = function (target) {
-  if (!guestsRooms[numberOfRooms.value].includes(numberOfGuests.value)) {
+  if (!GuestsRooms[numberOfRooms.value].includes(numberOfGuests.value)) {
+
     target.setCustomValidity('Количество не соотвествует');
   } else {
-    // console.log('все норм');
     target.setCustomValidity('');
   }
 };
