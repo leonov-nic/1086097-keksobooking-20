@@ -301,10 +301,10 @@ mapForm.classList.add('ad-form--disabled');
 
 mapPinMain.addEventListener('mouseup', logMouseButton);
 
-var LEFTMOUSEBUTTON = 0;
+var LEFT_MOUSE_BUTTON = 0;
 
 function logMouseButton(e) {
-  if (e.button === LEFTMOUSEBUTTON) {
+  if (e.button === LEFT_MOUSE_BUTTON) {
     toggle(false);
     renderPins(PINS);
   }
@@ -358,23 +358,31 @@ var toggle = function (disabled) {
   getPinMainLocation();
 };
 
-// С ВАЛИДНОСТЬЮ ПОЛНАЯ Ж
+var ONE_GUEST = '1';
+var TWO_GUESTS = '2';
+var THREE_GUESTS = '3';
+var NO_GUESTS = '0';
+
+var ONE_ROOM = '1';
+var TWO_ROOMS = '2';
+var THREE_ROOMS = '3';
+var ONE_HUNDRED_ROOMS = '100';
 
 var numberOfRooms = document.querySelector('#room_number');
 var numberOfGuests = document.querySelector('#capacity');
 
-var validateGuests = function (target) {
+var validateGuests = function () {
 
-  if (target.value === '1' && numberOfGuests.value !== '1') {
-    // console.log('единица');
+  if ((numberOfRooms.value === ONE_ROOM) && (numberOfGuests.value !== ONE_GUEST)) {
+    console.log('единица');
     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-  } else if (target.value === '2' && numberOfGuests.value !== '1' && numberOfGuests.value !== '2') {
+  } else if ((numberOfRooms.value === TWO_ROOMS) && (numberOfGuests.value !== ONE_GUEST) || (numberOfRooms.value === TWO_ROOMS) && (numberOfGuests.value !== TWO_GUESTS)) {
     // console.log('двойка');
     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-  } else if (target.value === '3' && numberOfGuests.value === '0') {
+  } else if ((numberOfRooms.value === THREE_ROOMS) && (numberOfGuests.value === NO_GUESTS)) {
     // console.log('тройка');
     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-  } else if (target.value === '100' && numberOfGuests.value !== '0') {
+  } else if ((numberOfRooms.value === ONE_HUNDRED_ROOMS) && (numberOfGuests.value !== NO_GUESTS)) {
     // console.log('четверка');
     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
   } else {
@@ -383,18 +391,18 @@ var validateGuests = function (target) {
   }
 };
 
-var validateRooms = function (target) {
+var validateRooms = function () {
 
-  if (target.value === '1' && numberOfRooms.value === '100') {
+  if ((numberOfGuests.value === ONE_GUEST) && (numberOfRooms.value === ONE_HUNDRED_ROOMS)) {
     // console.log('единица гости');
     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-  } else if (target.value === '2' && numberOfRooms.value !== '2' && numberOfRooms.value !== '3') {
+  } else if ((numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== ONE_ROOM) || (numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== TWO_ROOMS)) {
     // console.log('двойка гости');
     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-  } else if (target.value === '3' && numberOfRooms.value !== '3') {
+  } else if ((numberOfGuests.value === THREE_GUESTS) && (numberOfRooms.value !== THREE_ROOMS)) {
     // console.log('тройка гости');
     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-  } else if (target.value === '0' && numberOfRooms.value !== '100') {
+  } else if ((numberOfGuests.value === NO_GUESTS) && (numberOfRooms.value !== ONE_HUNDRED_ROOMS)) {
     // console.log('четверка гости');
     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
   } else {
@@ -405,7 +413,7 @@ var validateRooms = function (target) {
 
 var setField = function (evt) {
   if (evt.target === numberOfRooms) {
-    validateGuests(evt.target);
+    validateGuests();
   } else if (evt.target === numberOfGuests) {
     validateRooms(evt.target);
   }
