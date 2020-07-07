@@ -1,7 +1,7 @@
 'use strict';
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+// map.classList.remove('map--faded');
 
 var pinsList = document.querySelector('.map__pins');
 
@@ -162,7 +162,7 @@ var renderPins = function (pins) {
   return fragment;
 };
 
-renderPins(PINS);
+// renderPins(PINS);
 
 // var getSelectTypeAppartamet = function (types) {
 
@@ -284,7 +284,170 @@ var getNewCard = function (offer) {
   return newCardTemplate;
 };
 
-
 map.appendChild(getNewCard(getPinsMap()[0]), filterContainer);
 
-// console.log(getNewCard(getPinsMap()[0]));
+// ЧЕТВЕРТОЕ ДЗ
+
+var mapPinMain = document.querySelector('.map__pin--main');
+var adForm = document.querySelector('.ad-form');
+var adFormHeaderFieldset = document.querySelector('.ad-form-header');
+var adFormFieldset = document.querySelectorAll('.ad-form__element');
+var mapForm = document.querySelector('.map__filters');
+
+adFormHeaderFieldset.disabled = true;
+adFormFieldset.disabled = true;
+adForm.classList.add('ad-form--disabled');
+mapForm.classList.add('ad-form--disabled');
+
+mapPinMain.addEventListener('mouseup', logMouseButton);
+
+var LEFT_MOUSE_BUTTON = 0;
+
+function logMouseButton(e) {
+  if (e.button === LEFT_MOUSE_BUTTON) {
+    toggle(false);
+    renderPins(PINS);
+  }
+}
+
+// function logMouseButton(e) {
+//   if (typeof e === 'object') {
+//     switch (e.button) {
+//       case 0:
+//         toggle(false);
+//         renderPins(PINS);
+//         break;
+//       // case 1:
+//       //   log.textContent = 'Middle button clicked.';
+//       //   console.log('центр');
+//       //   break;
+//       // case 2:
+//       //   log.textContent = 'Right button clicked.';
+//       //   console.log('правая');
+//       //   break;
+//       default:
+//         // alert('нажмите левую нопку мышки');
+//     }
+//   }
+// }
+
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    toggle(false);
+    renderPins(PINS);
+  }
+});
+
+var getPinMainLocation = function () {
+  mapPinMain.style.left = getOffersOptions().location.x - (PIN_SIZE.width / 2) + 'px';
+  mapPinMain.style.top = getOffersOptions().location.y - PIN_SIZE.height + 'px';
+};
+
+var activationForm = function (disabled) {
+  for (var i = 0; i < adFormFieldset.length; i++) {
+    adFormFieldset[i].disabled = disabled;
+  }
+  adFormHeaderFieldset.removeAttribute('disabled', 'disabled');
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  mapForm.classList.remove('ad-form--disabled');
+};
+
+var toggle = function (disabled) {
+  activationForm(disabled);
+  getPinMainLocation();
+};
+
+// var ONE_GUEST = '1';
+// var TWO_GUESTS = '2';
+// var THREE_GUESTS = '3';
+// var NO_GUESTS = '0';
+
+// var ONE_ROOM = '1';
+// var TWO_ROOMS = '2';
+// var THREE_ROOMS = '3';
+// var ONE_HUNDRED_ROOMS = '100';
+
+var GuestsRooms = {
+  1: ['1'],
+  2: ['1', '2'],
+  3: ['1', '2', '3'],
+  100: ['0']
+};
+
+var numberOfRooms = document.querySelector('#room_number');
+var numberOfGuests = document.querySelector('#capacity');
+
+var validateField = function (target) {
+  numberOfRooms.setCustomValidity('');
+  numberOfGuests.setCustomValidity('');
+  if (!GuestsRooms[numberOfRooms.value].includes(numberOfGuests.value)) {
+    target.setCustomValidity('Количество не соотвествует');
+  } else {
+    target.setCustomValidity('');
+  }
+};
+
+var setField = function (evt) {
+  if (evt.target === numberOfRooms || evt.target === numberOfGuests) {
+    validateField(evt.target);
+  }
+};
+
+adForm.addEventListener('change', setField);
+
+// var validateGuests = function () {
+
+// numberOfGuests.setCustomValidity('');
+// numberOfRooms.setCustomValidity('');
+
+//   if ((numberOfRooms.value === ONE_ROOM) && (numberOfGuests.value !== ONE_GUEST)) {
+//     console.log('единица');
+//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+//   } else if ((numberOfRooms.value === TWO_ROOMS) && (numberOfGuests.value !== ONE_GUEST) || (numberOfRooms.value === TWO_ROOMS) && (numberOfGuests.value !== TWO_GUESTS)) {
+//     // console.log('двойка');
+//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+//   } else if ((numberOfRooms.value === THREE_ROOMS) && (numberOfGuests.value === NO_GUESTS)) {
+//     // console.log('тройка');
+//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+//   } else if ((numberOfRooms.value === ONE_HUNDRED_ROOMS) && (numberOfGuests.value !== NO_GUESTS)) {
+//     console.log('четверка');
+//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
+//   } else {
+//     // console.log('все норм');
+//     numberOfGuests.setCustomValidity('');
+//   }
+// };
+
+// var validateRooms = function () {
+
+// numberOfRooms.setCustomValidity('');
+// numberOfRooms.setCustomValidity('');
+
+//   if ((numberOfGuests.value === ONE_GUEST) && (numberOfRooms.value === ONE_HUNDRED_ROOMS)) {
+//     // console.log('единица гости');
+//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+//   } else if ((numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== TWO_ROOMS) || (numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== THREE_ROOMS)) {
+//     // console.log('двойка гости');
+//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+//   } else if ((numberOfGuests.value === THREE_GUESTS) && (numberOfRooms.value !== THREE_ROOMS)) {
+//     // console.log('тройка гости');
+//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+//   } else if ((numberOfGuests.value === NO_GUESTS) && (numberOfRooms.value !== ONE_HUNDRED_ROOMS)) {
+//     // console.log('четверка гости');
+//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
+//   } else {
+//     // console.log('все норм');
+//     numberOfRooms.setCustomValidity('');
+//   }
+// };
+
+// var setField = function (evt) {
+//   if (evt.target === numberOfRooms) {
+//     validateGuests();
+//   } else if (evt.target === numberOfGuests) {
+//     validateRooms();
+//   }
+// };
+
+// adForm.addEventListener('change', setField);
