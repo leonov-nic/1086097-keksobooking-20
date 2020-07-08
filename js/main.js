@@ -367,16 +367,26 @@ function logMouseButton(e) {
   }
 }
 
+
 // ВИДИМО ЗДЕСЬ НАДО ПОДЛАВЛИВАТЬ ВСЕ КАРТЫ И ПИНЫ
 // И ДОБАВЛЯТЬ КЛАСС HIDDEN КАРТАМ
 
 var active = function () {
   var popup = document.querySelectorAll('.map__card.popup');
   var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
-  // mapPinsItems[0].addEventListener('click', openPopup(popup[0]));
+  var popupsClose = document.querySelectorAll('.popup__close');
 
-  console.log(mapPinsItems);
-  console.log(popup);
+  var elc = function (element, data) {
+    element.addEventListener('click', function () {
+      data.classList.add('hidden');
+    });
+  };
+
+  for (var i = 0; i < mapPinsItems; i++) {
+    elc(mapPinsItems[i], popup[i]);
+
+    popupsClose[i]
+  }
 };
 
 // function logMouseButton(e) {
