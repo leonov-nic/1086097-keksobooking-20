@@ -281,10 +281,65 @@ var getNewCard = function (offer) {
   listNewPhotos.appendChild(getPhotoAppartamet(offer.offer.photo));
 
   newCardTemplate.querySelector('.popup__avatar').src = offer.author.avatar;
+
+  // newCardTemplate.querySelector('.map__card').className = 'map__card' + 'popup' + 'hidden';
+
+
   return newCardTemplate;
 };
 
-map.appendChild(getNewCard(getPinsMap()[0]), filterContainer);
+// ДОБАВЛЕНИЕ НЕСКОЛЬКИХ КАРТОЧЕК
+
+var renderCards = function () {
+
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < PINS.length; i++) {
+    fragment.appendChild(getNewCard(PINS[i]));
+  }
+
+  map.appendChild(fragment, filterContainer);
+};
+
+// map.appendChild(getNewCard(PINS[0]), filterContainer);
+
+// ЧЕТВЕРТОЕ ЗАДАНИЕ 4/2
+
+var popupsClose = document.querySelectorAll('.popup__close');
+var popupsCard = document.querySelectorAll('.popup');
+
+for (var k = 0; k < popupsClose.length; k++) {
+
+  var closePopup = function () {
+    popupsCard[k].classList.add('hidden');
+
+    document.removeEventListener('keydown', onPopupEscPress);
+  };
+
+  var openPopup = function () {
+    popupsCard.classList.remove('hidden');
+
+    document.addEventListener('keydown', onPopupEscPress);
+  };
+
+  var onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closePopup();
+    }
+  };
+
+  popupsClose[k].addEventListener('click', function () {
+    closePopup();
+  });
+
+  popupsClose[k].addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      closePopup();
+    }
+  });
+
+}
 
 // ЧЕТВЕРТОЕ ДЗ
 
@@ -307,8 +362,22 @@ function logMouseButton(e) {
   if (e.button === LEFT_MOUSE_BUTTON) {
     toggle(false);
     renderPins(PINS);
+    renderCards();
+    active();
   }
 }
+
+// ВИДИМО ЗДЕСЬ НАДО ПОДЛАВЛИВАТЬ ВСЕ КАРТЫ И ПИНЫ
+// И ДОБАВЛЯТЬ КЛАСС HIDDEN КАРТАМ
+
+var active = function () {
+  var popup = document.querySelectorAll('.map__card.popup');
+  var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
+  // mapPinsItems[0].addEventListener('click', openPopup(popup[0]));
+
+  console.log(mapPinsItems);
+  console.log(popup);
+};
 
 // function logMouseButton(e) {
 //   if (typeof e === 'object') {
@@ -358,16 +427,6 @@ var toggle = function (disabled) {
   getPinMainLocation();
 };
 
-// var ONE_GUEST = '1';
-// var TWO_GUESTS = '2';
-// var THREE_GUESTS = '3';
-// var NO_GUESTS = '0';
-
-// var ONE_ROOM = '1';
-// var TWO_ROOMS = '2';
-// var THREE_ROOMS = '3';
-// var ONE_HUNDRED_ROOMS = '100';
-
 var GuestsRooms = {
   1: ['1'],
   2: ['1', '2'],
@@ -395,59 +454,3 @@ var setField = function (evt) {
 };
 
 adForm.addEventListener('change', setField);
-
-// var validateGuests = function () {
-
-// numberOfGuests.setCustomValidity('');
-// numberOfRooms.setCustomValidity('');
-
-//   if ((numberOfRooms.value === ONE_ROOM) && (numberOfGuests.value !== ONE_GUEST)) {
-//     console.log('единица');
-//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-//   } else if ((numberOfRooms.value === TWO_ROOMS) && (numberOfGuests.value !== ONE_GUEST) || (numberOfRooms.value === TWO_ROOMS) && (numberOfGuests.value !== TWO_GUESTS)) {
-//     // console.log('двойка');
-//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-//   } else if ((numberOfRooms.value === THREE_ROOMS) && (numberOfGuests.value === NO_GUESTS)) {
-//     // console.log('тройка');
-//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-//   } else if ((numberOfRooms.value === ONE_HUNDRED_ROOMS) && (numberOfGuests.value !== NO_GUESTS)) {
-//     console.log('четверка');
-//     numberOfGuests.setCustomValidity('Количество гостей не соотвествует');
-//   } else {
-//     // console.log('все норм');
-//     numberOfGuests.setCustomValidity('');
-//   }
-// };
-
-// var validateRooms = function () {
-
-// numberOfRooms.setCustomValidity('');
-// numberOfRooms.setCustomValidity('');
-
-//   if ((numberOfGuests.value === ONE_GUEST) && (numberOfRooms.value === ONE_HUNDRED_ROOMS)) {
-//     // console.log('единица гости');
-//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-//   } else if ((numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== TWO_ROOMS) || (numberOfGuests.value === TWO_GUESTS) && (numberOfRooms.value !== THREE_ROOMS)) {
-//     // console.log('двойка гости');
-//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-//   } else if ((numberOfGuests.value === THREE_GUESTS) && (numberOfRooms.value !== THREE_ROOMS)) {
-//     // console.log('тройка гости');
-//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-//   } else if ((numberOfGuests.value === NO_GUESTS) && (numberOfRooms.value !== ONE_HUNDRED_ROOMS)) {
-//     // console.log('четверка гости');
-//     numberOfRooms.setCustomValidity('Количество комнат не соотвествует');
-//   } else {
-//     // console.log('все норм');
-//     numberOfRooms.setCustomValidity('');
-//   }
-// };
-
-// var setField = function (evt) {
-//   if (evt.target === numberOfRooms) {
-//     validateGuests();
-//   } else if (evt.target === numberOfGuests) {
-//     validateRooms();
-//   }
-// };
-
-// adForm.addEventListener('change', setField);
