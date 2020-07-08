@@ -282,8 +282,31 @@ var getNewCard = function (offer) {
 
   newCardTemplate.querySelector('.popup__avatar').src = offer.author.avatar;
 
-  // newCardTemplate.querySelector('.map__card').className = 'map__card' + 'popup' + 'hidden';
+  var close = newCardTemplate.querySelector('.popup__close');
+  document.addEventListener('keydown', onPopupEscPress);
 
+  var closePopup = function () {
+    newCardTemplate.remove();
+    document.removeEventListener('keydown', onPopupEscPress);
+  };
+
+  var onPopupEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closePopup();
+    }
+  };
+
+  close.addEventListener('click', function () {
+    closePopup();
+  });
+
+  close.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      closePopup();
+    }
+  });
 
   return newCardTemplate;
 };
@@ -291,13 +314,10 @@ var getNewCard = function (offer) {
 // ДОБАВЛЕНИЕ НЕСКОЛЬКИХ КАРТОЧЕК
 
 var renderCards = function () {
-
   var fragment = document.createDocumentFragment();
-
   for (var i = 0; i < PINS.length; i++) {
     fragment.appendChild(getNewCard(PINS[i]));
   }
-
   map.appendChild(fragment, filterContainer);
 };
 
@@ -307,39 +327,6 @@ var renderCards = function () {
 
 var popupsClose = document.querySelectorAll('.popup__close');
 var popupsCard = document.querySelectorAll('.popup');
-
-for (var k = 0; k < popupsClose.length; k++) {
-
-  var closePopup = function () {
-    popupsCard[k].classList.add('hidden');
-
-    document.removeEventListener('keydown', onPopupEscPress);
-  };
-
-  var openPopup = function () {
-    popupsCard.classList.remove('hidden');
-
-    document.addEventListener('keydown', onPopupEscPress);
-  };
-
-  var onPopupEscPress = function (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closePopup();
-    }
-  };
-
-  popupsClose[k].addEventListener('click', function () {
-    closePopup();
-  });
-
-  popupsClose[k].addEventListener('keydown', function (evt) {
-    if (evt.key === 'Enter') {
-      closePopup();
-    }
-  });
-
-}
 
 // ЧЕТВЕРТОЕ ДЗ
 
@@ -363,29 +350,22 @@ function logMouseButton(e) {
     toggle(false);
     renderPins(PINS);
     renderCards();
-    active();
   }
 }
 
+var activeCard = function () {
 
-// ВИДИМО ЗДЕСЬ НАДО ПОДЛАВЛИВАТЬ ВСЕ КАРТЫ И ПИНЫ
-// И ДОБАВЛЯТЬ КЛАСС HIDDEN КАРТАМ
+   var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
+   console.log(mapPinsItems);
 
-var active = function () {
-  var popup = document.querySelectorAll('.map__card.popup');
-  var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
-  var popupsClose = document.querySelectorAll('.popup__close');
-
-  var elc = function (element, data) {
+  var elc = function (element) {
     element.addEventListener('click', function () {
-      data.classList.add('hidden');
+      getNewCard(PINS[i]);
     });
   };
 
-  for (var i = 0; i < mapPinsItems; i++) {
-    elc(mapPinsItems[i], popup[i]);
-
-    popupsClose[i]
+  for (var i = 0; i < mapPinsItems.length; i++) {
+    elc(mapPinsItems[i]);
   }
 };
 
@@ -435,6 +415,7 @@ var activationForm = function (disabled) {
 var toggle = function (disabled) {
   activationForm(disabled);
   getPinMainLocation();
+  activeCard();
 };
 
 var GuestsRooms = {
@@ -464,3 +445,4 @@ var setField = function (evt) {
 };
 
 adForm.addEventListener('change', setField);
+
