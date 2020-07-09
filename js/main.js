@@ -282,6 +282,8 @@ var getNewCard = function (offer) {
 
   newCardTemplate.querySelector('.popup__avatar').src = offer.author.avatar;
 
+  // ЧЕТВЕРТОЕ ЗАДАНИЕ 4/2
+
   var close = newCardTemplate.querySelector('.popup__close');
   document.addEventListener('keydown', onPopupEscPress);
 
@@ -317,16 +319,14 @@ var renderCards = function () {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < PINS.length; i++) {
     fragment.appendChild(getNewCard(PINS[i]));
+    // var mapCards = document.querySelector('.popup');
   }
+
   map.appendChild(fragment, filterContainer);
+  var mapCard = document.querySelectorAll('.popup');
+  mapCard.style = 'display: none;';
 };
-
 // map.appendChild(getNewCard(PINS[0]), filterContainer);
-
-// ЧЕТВЕРТОЕ ЗАДАНИЕ 4/2
-
-var popupsClose = document.querySelectorAll('.popup__close');
-var popupsCard = document.querySelectorAll('.popup');
 
 // ЧЕТВЕРТОЕ ДЗ
 
@@ -349,23 +349,29 @@ function logMouseButton(e) {
   if (e.button === LEFT_MOUSE_BUTTON) {
     toggle(false);
     renderPins(PINS);
-    renderCards();
+    activeCard();
+    // renderCards();
   }
 }
 
 var activeCard = function () {
+  var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
 
-   var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
-   console.log(mapPinsItems);
+  var openCard = function (item, pin) {
+    item.addEventListener('click', function () {
+      map.appendChild(getNewCard(pin), filterContainer);
+      item.classList.add('map__pin--active');
 
-  var elc = function (element) {
-    element.addEventListener('click', function () {
-      getNewCard(PINS[i]);
+      var mapCards = document.querySelectorAll('.popup');
+      if (mapCards.length > 1) {
+        mapCards[0].remove();
+      }
+
     });
   };
 
   for (var i = 0; i < mapPinsItems.length; i++) {
-    elc(mapPinsItems[i]);
+    openCard(mapPinsItems[i], PINS[i]);
   }
 };
 
@@ -415,7 +421,6 @@ var activationForm = function (disabled) {
 var toggle = function (disabled) {
   activationForm(disabled);
   getPinMainLocation();
-  activeCard();
 };
 
 var GuestsRooms = {
