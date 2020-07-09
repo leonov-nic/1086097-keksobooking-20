@@ -315,17 +315,17 @@ var getNewCard = function (offer) {
 
 // ДОБАВЛЕНИЕ НЕСКОЛЬКИХ КАРТОЧЕК
 
-var renderCards = function () {
-  var fragment = document.createDocumentFragment();
-  for (var i = 0; i < PINS.length; i++) {
-    fragment.appendChild(getNewCard(PINS[i]));
-    // var mapCards = document.querySelector('.popup');
-  }
+// var renderCards = function () {
+//   var fragment = document.createDocumentFragment();
+//   for (var i = 0; i < PINS.length; i++) {
+//     fragment.appendChild(getNewCard(PINS[i]));
+//     // var mapCards = document.querySelector('.popup');
+//   }
 
-  map.appendChild(fragment, filterContainer);
-  var mapCard = document.querySelectorAll('.popup');
-  mapCard.style = 'display: none;';
-};
+//   map.appendChild(fragment, filterContainer);
+//   var mapCard = document.querySelectorAll('.popup');
+//   mapCard.style = 'display: none;';
+// };
 // map.appendChild(getNewCard(PINS[0]), filterContainer);
 
 // ЧЕТВЕРТОЕ ДЗ
@@ -356,15 +356,27 @@ function logMouseButton(e) {
 
 var activeCard = function () {
   var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
+  // console.log(mapPinMain);
 
   var openCard = function (item, pin) {
+
     item.addEventListener('click', function () {
-      map.appendChild(getNewCard(pin), filterContainer);
+
+      for (var j = 0; mapPinsItems.length > j; j++) {
+        mapPinsItems[j].classList.remove('map__pin--active');
+      }
       item.classList.add('map__pin--active');
 
+      map.appendChild(getNewCard(pin), filterContainer);
+
+      // var mapPinsActive = document.querySelector('.map__pin.map__pin--active');
       var mapCards = document.querySelectorAll('.popup');
+
       if (mapCards.length > 1) {
         mapCards[0].remove();
+        // mapPinsActive.classList.remove('map__pin--active');
+      } else if (!mapCards) {
+        item.classList.remove('map__pin--active');
       }
 
     });
