@@ -256,6 +256,16 @@ var getFeatures = function (features) {
   return fragment;
 };
 
+var removePinActive = function (evt, close) {
+  var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
+
+  if (evt.target === close) {
+    for (var j = 0; mapPinsItems.length > j; j++) {
+      mapPinsItems[j].classList.remove('map__pin--active');
+    }
+  }
+};
+
 var getNewCard = function (offer) {
 
   var newCardTemplate = cardTemplate.cloneNode(true);
@@ -287,10 +297,12 @@ var getNewCard = function (offer) {
   var close = newCardTemplate.querySelector('.popup__close');
   document.addEventListener('keydown', onPopupEscPress);
 
-  var closePopup = function () {
-    newCardTemplate.remove();
-    document.removeEventListener('keydown', onPopupEscPress);
-  };
+  close.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      closePopup();
+    }
+  });
 
   var onPopupEscPress = function (evt) {
     if (evt.key === 'Escape') {
@@ -299,15 +311,14 @@ var getNewCard = function (offer) {
     }
   };
 
+  var closePopup = function () {
+    newCardTemplate.remove();
+    removePinActive(close);
+    document.removeEventListener('keydown', onPopupEscPress);
+  };
+
   close.addEventListener('click', function () {
     closePopup();
-  });
-
-  close.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Enter') {
-      evt.preventDefault();
-      closePopup();
-    }
   });
 
   return newCardTemplate;
@@ -341,22 +352,25 @@ adFormFieldset.disabled = true;
 adForm.classList.add('ad-form--disabled');
 mapForm.classList.add('ad-form--disabled');
 
-mapPinMain.addEventListener('mouseup', logMouseButton);
+mapPinMain.addEventListener('mouseup', leftMouseButtonPress);
 
 var LEFT_MOUSE_BUTTON = 0;
 
-function logMouseButton(e) {
+function leftMouseButtonPress(e) {
   if (e.button === LEFT_MOUSE_BUTTON) {
     toggle(false);
-    renderPins(PINS);
-    activeCard();
     // renderCards();
   }
 }
 
-var activeCard = function () {
+mapPinMain.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    toggle(false);
+  }
+});
+
+var addPinHandlers = function () {
   var mapPinsItems = document.querySelectorAll('button.map__pin:not(.map__pin--main)');
-  // console.log(mapPinMain);
 
   var openCard = function (item, pin) {
 
@@ -366,16 +380,16 @@ var activeCard = function () {
         mapPinsItems[j].classList.remove('map__pin--active');
       }
       item.classList.add('map__pin--active');
-
       map.appendChild(getNewCard(pin), filterContainer);
+      var mapCards = document.querySelectorAll('.popup');
 
       // var mapPinsActive = document.querySelector('.map__pin.map__pin--active');
-      var mapCards = document.querySelectorAll('.popup');
 
       if (mapCards.length > 1) {
         mapCards[0].remove();
+
         // mapPinsActive.classList.remove('map__pin--active');
-      } else if (!mapCards) {
+      } else if (mapCards === 2) {
         item.classList.remove('map__pin--active');
       }
 
@@ -387,35 +401,8 @@ var activeCard = function () {
   }
 };
 
-// function logMouseButton(e) {
-//   if (typeof e === 'object') {
-//     switch (e.button) {
-//       case 0:
-//         toggle(false);
-//         renderPins(PINS);
-//         break;
-//       // case 1:
-//       //   log.textContent = 'Middle button clicked.';
-//       //   console.log('центр');
-//       //   break;
-//       // case 2:
-//       //   log.textContent = 'Right button clicked.';
-//       //   console.log('правая');
-//       //   break;
-//       default:
-//         // alert('нажмите левую нопку мышки');
-//     }
-//   }
-// }
-
-mapPinMain.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
-    toggle(false);
-    renderPins(PINS);
-  }
-});
-
 var getPinMainLocation = function () {
+  mapPinMain.style = 'pointer-events: none; left: 570px; top: 375px;';
   mapPinMain.style.left = getOffersOptions().location.x - (PIN_SIZE.width / 2) + 'px';
   mapPinMain.style.top = getOffersOptions().location.y - PIN_SIZE.height + 'px';
 };
@@ -433,6 +420,8 @@ var activationForm = function (disabled) {
 var toggle = function (disabled) {
   activationForm(disabled);
   getPinMainLocation();
+  renderPins(PINS);
+  addPinHandlers();
 };
 
 var GuestsRooms = {
