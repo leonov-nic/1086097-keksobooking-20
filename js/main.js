@@ -295,14 +295,6 @@ var getNewCard = function (offer) {
   // ЧЕТВЕРТОЕ ЗАДАНИЕ 4/2
 
   var close = newCardTemplate.querySelector('.popup__close');
-  document.addEventListener('keydown', onPopupEscPress);
-
-  close.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Enter') {
-      evt.preventDefault();
-      closePopup();
-    }
-  });
 
   var onPopupEscPress = function (evt) {
     if (evt.key === 'Escape') {
@@ -316,6 +308,15 @@ var getNewCard = function (offer) {
     removePinActive(close);
     document.removeEventListener('keydown', onPopupEscPress);
   };
+
+  document.addEventListener('keydown', onPopupEscPress);
+
+  close.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      closePopup();
+    }
+  });
 
   close.addEventListener('click', function () {
     closePopup();
@@ -359,7 +360,6 @@ var LEFT_MOUSE_BUTTON = 0;
 function leftMouseButtonPress(e) {
   if (e.button === LEFT_MOUSE_BUTTON) {
     toggle(false);
-    // renderCards();
   }
 }
 
@@ -383,14 +383,8 @@ var addPinHandlers = function () {
       map.appendChild(getNewCard(pin), filterContainer);
       var mapCards = document.querySelectorAll('.popup');
 
-      // var mapPinsActive = document.querySelector('.map__pin.map__pin--active');
-
       if (mapCards.length > 1) {
         mapCards[0].remove();
-
-        // mapPinsActive.classList.remove('map__pin--active');
-      } else if (mapCards === 2) {
-        item.classList.remove('map__pin--active');
       }
 
     });
@@ -405,6 +399,8 @@ var getPinMainLocation = function () {
   mapPinMain.style = 'pointer-events: none; left: 570px; top: 375px;';
   mapPinMain.style.left = getOffersOptions().location.x - (PIN_SIZE.width / 2) + 'px';
   mapPinMain.style.top = getOffersOptions().location.y - PIN_SIZE.height + 'px';
+
+  // console.log(mapPinMain);
 };
 
 var activationForm = function (disabled) {
@@ -422,6 +418,8 @@ var toggle = function (disabled) {
   getPinMainLocation();
   renderPins(PINS);
   addPinHandlers();
+  fullFieldPAdress();
+  dragMainPin();
 };
 
 var GuestsRooms = {
@@ -452,3 +450,70 @@ var setField = function (evt) {
 
 adForm.addEventListener('change', setField);
 
+// ДАЛЬШЕ ВАЛИДАЦИЯ ПО ЗАДАНИЮ 4/2
+
+var typeOfAccommodation = document.querySelector('#type');
+var priceOfAccommodation = document.querySelector('#price');
+var timeIn = document.querySelector('#timein');
+var timeOut = document.querySelector('#timeout');
+var addressArrival = document.querySelector('#address');
+
+typeOfAccommodation.addEventListener('change', function (evt) {
+  switch (evt.target.value) {
+    case 'bungalo':
+      priceOfAccommodation.min = 0;
+      priceOfAccommodation.placeholder = '0';
+      break;
+    case 'flat':
+      priceOfAccommodation.min = 1000;
+      priceOfAccommodation.placeholder = '1000';
+      break;
+    case 'house':
+      priceOfAccommodation.min = 5000;
+      priceOfAccommodation.placeholder = '5000';
+      break;
+    case 'palace':
+      priceOfAccommodation.min = 10000;
+      priceOfAccommodation.placeholder = '10000';
+      break;
+  }
+});
+
+var fullFieldPAdress = function () {
+  addressArrival.placeholder = mapPinMain.offsetLeft + ', ' + mapPinMain.offsetTop;
+};
+
+
+timeIn.addEventListener('change', function (evt) {
+  timeOut.value = evt.target.value;
+});
+
+timeOut.addEventListener('change', function (evt) {
+  timeIn.value = evt.target.value;
+});
+
+// var TimesInOut = {
+//   '12:00': ['12:00'],
+//   '13:00': ['13:00'],
+//   '14:00': ['14:00']
+// };
+
+// timeIn.addEventListener('change', function (evt) {
+//   if (!TimesInOut[timeIn.value].includes(timeOut.value)) {
+//     timeOut.value = timeIn.value;
+//   }
+// });
+
+// timeOut.addEventListener('change', function (evt) {
+//   if (!TimesInOut[timeOut.value].includes(timeIn.value)) {
+//     timeIn.value = timeOut.value;
+//   }
+// });
+
+var dragMainPin = function () {
+
+  mapPinMain.draggable = true;
+  mapPinMain.addEventListener('mousedown', function () {
+
+  });
+};
