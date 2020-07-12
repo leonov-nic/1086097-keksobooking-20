@@ -44,8 +44,8 @@ var getLocation = function (min, max, ymin, ymax) {
 
 var LOCATIONMINMAX = {
   X: {
-    MIN: 300,
-    MAX: 900
+    MIN: 0,
+    MAX: 1200
   },
   Y: {
     MIN: 130,
@@ -396,7 +396,7 @@ var addPinHandlers = function () {
 };
 
 var getPinMainLocation = function () {
-  mapPinMain.style = 'pointer-events: none; left: 570px; top: 375px;';
+  mapPinMain.style = 'pointer-events: auto; left: 570px; top: 375px;';
   mapPinMain.style.left = getOffersOptions().location.x - (PIN_SIZE.width / 2) + 'px';
   mapPinMain.style.top = getOffersOptions().location.y - PIN_SIZE.height + 'px';
 
@@ -418,8 +418,8 @@ var toggle = function (disabled) {
   getPinMainLocation();
   renderPins(PINS);
   addPinHandlers();
-  fullFieldPAdress();
-  dragMainPin();
+  fullFieldPAdress(mapPinMain);
+  pinMainMove();
 };
 
 var GuestsRooms = {
@@ -479,10 +479,15 @@ typeOfAccommodation.addEventListener('change', function (evt) {
   }
 });
 
+addressArrival.placeholder = mapPinMain.offsetLeft + ', ' + mapPinMain.offsetTop;
+
 var fullFieldPAdress = function () {
   addressArrival.placeholder = mapPinMain.offsetLeft + ', ' + mapPinMain.offsetTop;
 };
 
+var fullCurrentFieldPAdress = function (coords) {
+  addressArrival.value = coords.x + ', ' + coords.y;
+};
 
 timeIn.addEventListener('change', function (evt) {
   timeOut.value = evt.target.value;
@@ -510,10 +515,72 @@ timeOut.addEventListener('change', function (evt) {
 //   }
 // });
 
-var dragMainPin = function () {
+var pinMainMove = function () {
+  mapPinMain.removeEventListener('mouseup', leftMouseButtonPress);
 
-  mapPinMain.draggable = true;
-  mapPinMain.addEventListener('mousedown', function () {
+  var SMALL_PIN_SIZE = {
+    width: 40,
+    height: 65
+  };
+
+  mapPinMain.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var mouseMove = function (evtMove) {
+      evtMove.preventDefault();
+
+      var shift = {
+        x: startCoords.x - evtMove.clientX,
+        y: startCoords.y - evtMove.clientY
+      };
+
+      startCoords = {
+        x: evtMove.clientX,
+        y: evtMove.clientY
+      };
+
+      var mapPinMainPosition = {
+        x: mapPinMain.offsetLeft - shift.x,
+        y: mapPinMain.offsetTop - shift.y
+      };
+
+      // console.log(mapPinMain.offsetHeight);
+
+      var Border = {
+        TOP: LOCATIONMINMAX.Y.MIN,
+        BOTTOM: LOCATIONMINMAX.Y.MAX - mapPinMain.offsetHeight,
+        LEFT: LOCATIONMINMAX.X.MIN,
+        RIGHT: LOCATIONMINMAX.X.MAX - mapPinMain.offsetWidth
+      };
+
+      if (mapPinMainPosition.x >= Border.LEFT && mapPinMainPosition.x <= Border.RIGHT) {
+        mapPinMain.style.left = mapPinMainPosition.x + 'px';
+      }
+      if (mapPinMainPosition.y >= Border.TOP && mapPinMainPosition.y <= Border.BOTTOM) {
+        mapPinMain.style.top = mapPinMainPosition.y + 'px';
+      }
+      var mapPinMainCeilCoords = {
+        x: Math.ceil(mapPinMainPosition.x + (SMALL_PIN_SIZE.width / 2)),
+        y: mapPinMainPosition.y + SMALL_PIN_SIZE.height
+      };
+
+      fullCurrentFieldPAdress(mapPinMainCeilCoords);
+    };
+
+    var onMouseUp = function (evtUp) {
+      evtUp.preventDefault();
+      document.removeEventListener('mousemove', mouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', mouseMove);
+    document.addEventListener('mouseup', onMouseUp);
 
   });
 };
+
