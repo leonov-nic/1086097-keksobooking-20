@@ -515,6 +515,52 @@ timeOut.addEventListener('change', function (evt) {
 //   }
 // });
 
+// ВАЛИДАЦИЯ ФОТОГРАФИИ
+
+
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+
+  var ImageParams = {
+    WIDTH: '70px',
+    HEIGHT: '70px',
+    BORDER_RADIUS: '5px'
+  };
+
+  // var avatarChooser = document.querySelector('#avatar');
+  // var avatarPreview = document.querySelector('.ad-form-header__preview img');
+  var imagesContainer = document.querySelector('.ad-form__photo');
+  var imageChooser = document.querySelector('#images');
+
+
+imageChooser.addEventListener('change', function (evt) {
+  var file = imageChooser.files;
+
+        var reader = new FileReader();
+          func(evt.target.result);
+        reader.readAsDataURL(item);
+
+  console.log(reader.readAsDataURL(item));
+
+  if (!document.querySelector('.ad-form__photo img')) {
+  var image = document.createElement('img');
+  // imagesContainer.style.backgroundColor = 'red';
+    image.src = request.readAsDataURL;
+  image.style.width = ImageParams.WIDTH;
+  image.style.height = ImageParams.HEIGHT;
+  image.style.borderRadius = ImageParams.BORDER_RADIUS;
+  imagesContainer.appendChild(image);
+  console.log(image);
+  } else {
+    removeChild(document.querySelector('.ad-form__photo img'))
+  }
+});
+
+
+
+
+
+
 var pinMainMove = function () {
   mapPinMain.removeEventListener('mouseup', leftMouseButtonPress);
 
