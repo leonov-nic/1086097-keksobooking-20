@@ -518,47 +518,73 @@ timeOut.addEventListener('change', function (evt) {
 // ВАЛИДАЦИЯ ФОТОГРАФИИ
 
 
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 
-  var ImageParams = {
-    WIDTH: '70px',
-    HEIGHT: '70px',
-    BORDER_RADIUS: '5px'
-  };
+var ImageParams = {
+  WIDTH: '70px',
+  HEIGHT: '70px',
+  BORDER_RADIUS: '5px'
+};
 
-  // var avatarChooser = document.querySelector('#avatar');
-  // var avatarPreview = document.querySelector('.ad-form-header__preview img');
-  var imagesContainer = document.querySelector('.ad-form__photo');
-  var imageChooser = document.querySelector('#images');
+// var avatarChooser = document.querySelector('#avatar');
+// var avatarPreview = document.querySelector('.ad-form-header__preview img');
+var imagesContainer = document.querySelector('.ad-form__photo');
+var imageChooser = document.querySelector('#images');
 
+//  var formFileChooser = document.querySelector('.ad-form__upload input[type=file]');
 
-imageChooser.addEventListener('change', function (evt) {
-  var file = imageChooser.files;
+// imageChooser.addEventListener('change', function () {
+//   console.log(formFileChooser.files[0]);
 
-        var reader = new FileReader();
-          func(evt.target.result);
-        reader.readAsDataURL(item);
+//   var picFile = formFileChooser.files[0];
 
-  console.log(reader.readAsDataURL(item));
-
-  if (!document.querySelector('.ad-form__photo img')) {
-  var image = document.createElement('img');
-  // imagesContainer.style.backgroundColor = 'red';
-    image.src = request.readAsDataURL;
-  image.style.width = ImageParams.WIDTH;
-  image.style.height = ImageParams.HEIGHT;
-  image.style.borderRadius = ImageParams.BORDER_RADIUS;
-  imagesContainer.appendChild(image);
-  console.log(image);
-  } else {
-    removeChild(document.querySelector('.ad-form__photo img'))
-  }
-});
+//  var image = document.createElement('img');
 
 
+//       image.style.width = ImageParams.WIDTH;
+//       image.style.height = ImageParams.HEIGHT;
+//       image.style.borderRadius = ImageParams.BORDER_RADIUS;
+//       image.src = picFile.result;
+
+//       if (!document.querySelector('.ad-form__photo img')) {
+//         imagesContainer.appendChild(image);
+//       } else {
+//         (document.querySelector('.ad-form__photo img')).remove();
+//         imagesContainer.appendChild(image);
+//       }
 
 
+//   });
+
+var getImageChooserChange = function () {
+  var files = event.target.files;
+
+  [].forEach.call(files, function (file) {
+    var picReader = new FileReader();
+
+    picReader.addEventListener('load', function (event) {
+      var picFile = event.target;
+      var image = document.createElement('img');
+
+      image.style.width = ImageParams.WIDTH;
+      image.style.height = ImageParams.HEIGHT;
+      image.style.borderRadius = ImageParams.BORDER_RADIUS;
+      image.src = picFile.result;
+
+      if (!document.querySelector('.ad-form__photo img')) {
+        imagesContainer.appendChild(image);
+      } else {
+        (document.querySelector('.ad-form__photo img')).remove();
+        imagesContainer.appendChild(image);
+      }
+    });
+
+    picReader.readAsDataURL(file);
+  });
+};
+
+imageChooser.addEventListener('change', getImageChooserChange);
 
 
 var pinMainMove = function () {
