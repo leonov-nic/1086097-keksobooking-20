@@ -74,6 +74,8 @@
   };
 
   window.move = {
+
+
     pinMainMove: pinMainMove
   };
 

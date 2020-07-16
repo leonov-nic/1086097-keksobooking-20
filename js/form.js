@@ -13,6 +13,9 @@
   var priceOfAccommodation = document.querySelector('#price');
   var timeIn = document.querySelector('#timein');
   var timeOut = document.querySelector('#timeout');
+  var numberOfRooms = document.querySelector('#room_number');
+  var numberOfGuests = document.querySelector('#capacity');
+  var advertisementTitle = document.querySelector('#title');
 
   var deactivationForm = function () {
     for (var i = 0; i < adFormFieldset.length; i++) {
@@ -22,6 +25,14 @@
     map.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     mapForm.classList.add('ad-form--disabled');
+
+    numberOfRooms.value = '1';
+    numberOfGuests.value = '3';
+    typeOfAccommodation.value = 'flat';
+    timeIn.value = '12:00';
+    advertisementTitle.value = '';
+
+    window.loadImage.deactivationImages();
   };
 
   deactivationForm();
@@ -42,9 +53,6 @@
     3: ['1', '2', '3'],
     100: ['0']
   };
-
-  var numberOfRooms = document.querySelector('#room_number');
-  var numberOfGuests = document.querySelector('#capacity');
 
   var validateField = function (target) {
     numberOfRooms.setCustomValidity('');
@@ -95,7 +103,6 @@
     addressArrival.value = coords.x + ', ' + coords.y;
   };
 
-
   timeIn.addEventListener('change', function (evt) {
     timeOut.value = evt.target.value;
   });
@@ -106,8 +113,10 @@
 
   window.form = {
     activationForm: activationForm,
+    deactivationForm: deactivationForm,
     fullFieldPAdress: fullFieldPAdress,
-    fullCurrentFieldAdress: fullCurrentFieldAdress
+    fullCurrentFieldAdress: fullCurrentFieldAdress,
+    addressArrival: addressArrival
   };
 
 })();
