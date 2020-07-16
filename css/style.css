@@ -198,7 +198,7 @@ fieldset {
 .map__pin:active img,
 .map__pin--active img {
   -webkit-box-shadow: 0 0 15px 15px rgba(255, 86, 53, 0.7);
-          box-shadow: 0 0 15px 15px rgba(255, 86, 53, 0.7);
+          /*box-shadow: 0 0 15px 15px rgba(255, 86, 53, 0.7);*/
 }
 
 .map__pin--main {
