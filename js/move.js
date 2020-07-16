@@ -41,10 +41,10 @@
         // console.log(mapPinMain.offsetHeight);
 
         var Border = {
-          TOP: window.map.LOCATIONMINMAX.Y.MIN,
-          BOTTOM: window.map.LOCATIONMINMAX.Y.MAX - mapPinMain.offsetHeight,
-          LEFT: window.map.LOCATIONMINMAX.X.MIN,
-          RIGHT: window.map.LOCATIONMINMAX.X.MAX - mapPinMain.offsetWidth
+          TOP: window.data.LOCATIONMINMAX.Y.MIN,
+          BOTTOM: window.data.LOCATIONMINMAX.Y.MAX - mapPinMain.offsetHeight,
+          LEFT: window.data.LOCATIONMINMAX.X.MIN,
+          RIGHT: window.data.LOCATIONMINMAX.X.MAX - mapPinMain.offsetWidth
         };
 
         if (mapPinMainPosition.x >= Border.LEFT && mapPinMainPosition.x <= Border.RIGHT) {
@@ -74,8 +74,6 @@
   };
 
   window.move = {
-
-
     pinMainMove: pinMainMove
   };
 

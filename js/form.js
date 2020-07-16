@@ -16,6 +16,7 @@
   var numberOfRooms = document.querySelector('#room_number');
   var numberOfGuests = document.querySelector('#capacity');
   var advertisementTitle = document.querySelector('#title');
+  var objectDescription = document.querySelector('#description');
 
   var deactivationForm = function () {
     for (var i = 0; i < adFormFieldset.length; i++) {
@@ -31,6 +32,7 @@
     typeOfAccommodation.value = 'flat';
     timeIn.value = '12:00';
     advertisementTitle.value = '';
+    objectDescription.value = '';
 
     window.loadImage.deactivationImages();
   };
