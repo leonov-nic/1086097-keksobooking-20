@@ -55,15 +55,16 @@
       window.form.deactivationForm();
       deactivationPin(reset);
       removeMapCard();
-      // window.move.deactPinMove();
+      window.move.deactivationMainPinMove();
+
     });
   };
 
   var removeMapCard = function () {
     var mapCard = document.querySelector('.map__card');
-      if (mapCard) {
-        mapCard.remove();
-      }
+    if (mapCard) {
+      mapCard.remove();
+    }
   };
 
   var deactivationPin = function (evt, newset) {
@@ -92,9 +93,10 @@
     window.data.renderPins(window.data.PINS);
     addPinHandlers();
     window.form.fullFieldPAdress(mapPinMain);
-    window.move.pinMainMove();
 
+    window.move.activationMainPinMove();
     deactivationMap();
+    window.modal.addSuccessModal();
   };
 
   window.map = {
