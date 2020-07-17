@@ -13,6 +13,9 @@
     height: 70
   };
 
+  var DEFAULT_MAIN_PIN_X = 570;
+  var DEFAULT_MAIN_PIN_Y = 375;
+
   var QUANTITY_OF_PINS = 8;
 
   var getAvatar = function (min, max) {
@@ -255,6 +258,8 @@
 
   window.data = {
     PINS: PINS,
+    DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
+    DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,
     LOCATIONMINMAX: LOCATIONMINMAX,
     renderPins: renderPins,
     getNewCard: getNewCard

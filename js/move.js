@@ -8,7 +8,7 @@
     mapPinMain.removeEventListener('mouseup', window.map.leftMouseButtonPress);
 
     var SMALL_PIN_SIZE = {
-      width: 40,
+      width: 65,
       height: 65
     };
 
@@ -73,8 +73,18 @@
     });
   };
 
+  var getMainPinDefaultCoords = function () {
+    return {
+      x: window.data.DEFAULT_MAIN_PIN_X,
+      y: window.data.DEFAULT_MAIN_PIN_Y
+    };
+  };
+
+  console.log(getMainPinDefaultCoords().x);
+
   window.move = {
-    pinMainMove: pinMainMove
+    pinMainMove: pinMainMove,
+    getMainPinDefaultCoords: getMainPinDefaultCoords
   };
 
 })();
