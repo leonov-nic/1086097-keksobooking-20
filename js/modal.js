@@ -21,12 +21,14 @@
     };
 
     document.addEventListener('keydown', onPopupEscPress);
-    popup.addEventListener('click', onPopupEscPress);
 
     var closePopup = function () {
       popup.remove();
       document.removeEventListener('keydown', onPopupEscPress);
+      popup.removeEventListener('click', closePopup);
     };
+
+    popup.addEventListener('click', closePopup);
   };
 
   window.modal = {
