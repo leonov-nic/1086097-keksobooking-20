@@ -96,7 +96,6 @@
 
     window.move.activationMainPinMove();
     deactivationMap();
-    window.modal.addSuccessModal();
   };
 
   window.map = {
