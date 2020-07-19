@@ -11,13 +11,13 @@
   };
 
   var activationMainPinMove = function () {
-    mapPinMain.removeEventListener('mouseup', window.map.leftMouseButtonPress);
+    mapPinMain.removeEventListener('mouseup', window.map.onLeftMouseButtonPress);
     mapPinMain.addEventListener('mousedown', onMouseMoveUp);
   };
 
   var deactivationMainPinMove = function () {
     mapPinMain.removeEventListener('mousedown', onMouseMoveUp);
-    mapPinMain.addEventListener('mouseup', window.map.leftMouseButtonPress);
+    mapPinMain.addEventListener('mouseup', window.map.onLeftMouseButtonPress);
   };
 
   var onMouseMoveUp = function (evt) {
@@ -28,7 +28,7 @@
       y: evt.clientY
     };
 
-    var mouseMove = function (evtMove) {
+    var onMouseMove = function (evtMove) {
       evtMove.preventDefault();
 
       var shift = {
@@ -69,14 +69,14 @@
       window.form.fullCurrentFieldAdress(mapPinMainCeilCoords);
     };
 
-    var mouseUp = function (evtUp) {
+    var onMouseUp = function (evtUp) {
       evtUp.preventDefault();
-      document.removeEventListener('mousemove', mouseMove);
-      document.removeEventListener('mouseup', mouseUp);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
     };
 
-    document.addEventListener('mousemove', mouseMove);
-    document.addEventListener('mouseup', mouseUp);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   };
 
   var getMainPinDefaultCoords = function () {

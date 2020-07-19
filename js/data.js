@@ -153,19 +153,14 @@
 
     switch (type) {
       case 'palace':
-        type = 'Дворец';
-        break;
+        return 'Дворец';
       case 'flat':
-        type = 'Комната';
-        break;
+        return 'Комната';
       case 'house':
-        type = 'Дом';
-        break;
+        return 'Дом';
       case 'bungalo':
-        type = 'Бунгало';
-        break;
+        return 'Бунгало';
     }
-    return type;
   };
 
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
