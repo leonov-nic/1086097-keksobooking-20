@@ -31,19 +31,6 @@
       }
     }
 
-    // colorize: function (element, elementField, arrayColors) {
-    //   element.addEventListener('click', function () {
-    //     var color = getRandElement(arrayColors);
-    //     if (element.tagName.toLowerCase() === 'div') {
-    //       element.style.background = color;
-    //       elementField.value = color;
-    //     } else {
-    //       element.style.fill = color;
-    //       elementField.value = color;
-    //     }
-    //   });
-    // }
-
   };
 
 })();

@@ -18,6 +18,10 @@
   var advertisementTitle = document.querySelector('#title');
   var objectDescription = document.querySelector('#description');
 
+  var fullCurrentFieldAdress = function (coords) {
+    addressArrival.value = coords.x + ', ' + coords.y;
+  };
+
   var deactivationForm = function () {
     for (var i = 0; i < adFormFieldset.length; i++) {
       adFormFieldset[i].disabled = true;
@@ -35,6 +39,8 @@
     objectDescription.value = '';
 
     window.loadImage.deactivationImages();
+    var defaultCoords = window.move.getMainPinDefaultCoords();
+    fullCurrentFieldAdress(defaultCoords);
   };
 
   deactivationForm();
@@ -99,10 +105,6 @@
 
   var fullFieldPAdress = function () {
     addressArrival.placeholder = mapPinMain.offsetLeft + ', ' + mapPinMain.offsetTop;
-  };
-
-  var fullCurrentFieldAdress = function (coords) {
-    addressArrival.value = coords.x + ', ' + coords.y;
   };
 
   timeIn.addEventListener('change', function (evt) {
