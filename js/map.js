@@ -50,10 +50,10 @@
   };
 
   var onDeactivationMap = function () {
-      window.form.deactivationForm();
-      deactivationPin(reset);
-      removeMapCard();
-      window.move.deactivationMainPinMove();
+    window.form.deactivationForm();
+    deactivationPin(reset);
+    removeMapCard();
+    window.move.deactivationMainPinMove();
   };
 
   var removeMapCard = function () {

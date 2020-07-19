@@ -161,6 +161,7 @@
       case 'bungalo':
         return 'Бунгало';
     }
+    return '';
   };
 
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
