@@ -90,54 +90,106 @@
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
   ];
 
-  var getOffersOptions = function () {
+  // var getOffersOptions = function () {
 
+  //   return {
+
+  //     author: {
+  //       avatar: getAvatar(1, 8)
+  //     },
+
+  //     offer: {
+  //       title: getTitle(TITLES),
+  //       address: getLocation(LOCATIONMINMAX.X.MIN, LOCATIONMINMAX.X.MAX, LOCATIONMINMAX.Y.MIN, LOCATIONMINMAX.Y.MIN),
+  //       price: window.utils.getRandomFromInterval(1000, 10000),
+  //       type: window.utils.getRandomElement(TYPES),
+  //       rooms: window.utils.getRandomFromInterval(1, 4),
+  //       guests: window.utils.getRandomFromInterval(1, 8),
+  //       checkin: window.utils.getRandomElement(CHECKIN),
+  //       checkout: window.utils.getRandomElement(CHECKOUT),
+  //       feature: window.utils.getRandomArray(FEATURES),
+  //       description: window.utils.getRandomElement(DESCRIPTIONS),
+  //       photo: window.utils.getRandomArray(PHOTOS)
+  //     },
+
+  //     location: {
+  //       x: window.utils.getRandomFromInterval(300, 900),
+  //       y: window.utils.getRandomFromInterval(130, 630)
+  //     }
+  //   };
+  // };
+
+
+  var getOffersOptions = function (pin) {
     return {
 
       author: {
-        avatar: getAvatar(1, 8)
+        avatar: pin.author.avatar
       },
 
       offer: {
-        title: getTitle(TITLES),
-        address: getLocation(LOCATIONMINMAX.X.MIN, LOCATIONMINMAX.X.MAX, LOCATIONMINMAX.Y.MIN, LOCATIONMINMAX.Y.MIN),
-        price: window.utils.getRandomFromInterval(1000, 10000),
-        type: window.utils.getRandomElement(TYPES),
-        rooms: window.utils.getRandomFromInterval(1, 4),
-        guests: window.utils.getRandomFromInterval(1, 8),
-        checkin: window.utils.getRandomElement(CHECKIN),
-        checkout: window.utils.getRandomElement(CHECKOUT),
-        feature: window.utils.getRandomArray(FEATURES),
-        description: window.utils.getRandomElement(DESCRIPTIONS),
-        photo: window.utils.getRandomArray(PHOTOS)
+        title: pin.offer.title,
+        address: pin.offer.address,
+        price: pin.offer.price,
+        type: pin.offer.type,
+        rooms:pin.offer.rooms,
+        guests: pin.offer.guests,
+        checkin: pin.offer.checkin,
+        checkout: pin.offer.checkout,
+        feature: pin.offer.feature,
+        description: pin.offer.description,
+        photo: pin.offer.photo
       },
 
       location: {
-        x: window.utils.getRandomFromInterval(300, 900),
-        y: window.utils.getRandomFromInterval(130, 630)
+        x: pin.location.x,
+        y: pin.location.y
       }
     };
   };
 
-  var getPinsMap = function () {
-    var pins = [];
+  var PINS = [];
 
-    for (var i = 0; i < QUANTITY_OF_PINS; i++) {
-      pins.push(getOffersOptions());
+  var onLoad = function (pins) {
+    console.log(pins);
+    for (var i = 0; i < pins.length; i++) {
+      PINS.push(getOffersOptions(pins[i]));
     }
-    return pins;
   };
+
+  var onError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; margin: 80px; text-align: center; background-color: black; padding: 50px;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  // var getPinsMap = function (pins) {
+  //   var pins = [];
+
+  //   for (var i = 0; i < pins.length; i++) {
+  //     pins.push(getOffersOptions());
+  //   }
+  //   return pins;
+  // };
 
   var getFilledPin = function (pin) {
     var newPinElement = mapPinTemplate.cloneNode(true);
-    newPinElement.style = 'left: ' + pin.location.x + 'px' + '; ' + 'top: ' + pin.location.x + 'px' + ';';
+    newPinElement.style = 'left: ' + pin.location.x + 'px' + '; ' + 'top: ' + pin.location.y + 'px' + ';';
     newPinElement.querySelector('img').src = pin.author.avatar;
     newPinElement.querySelector('img').alt = pin.offer.title;
     return newPinElement;
   };
 
-  var PINS = [];
-  PINS = getPinsMap();
+  // var PINS = [];
+  // PINS = getPinsMap();
+  // window.backend.load(onLoad, onError);
+
 
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
@@ -148,6 +200,8 @@
     }
     return fragment;
   };
+
+  console.log(renderPins(PINS));
 
   var getTypeAppartamet = function (type) {
 
@@ -254,6 +308,8 @@
 
   window.data = {
     PINS: PINS,
+    onLoad: onLoad,
+    onError: onError,
     DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
     DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,
     LOCATIONMINMAX: LOCATIONMINMAX,

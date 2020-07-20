@@ -17,9 +17,16 @@
   var numberOfGuests = document.querySelector('#capacity');
   var advertisementTitle = document.querySelector('#title');
   var objectDescription = document.querySelector('#description');
+  var listFeatures = document.querySelectorAll('.feature__checkbox');
 
   var fullCurrentFieldAdress = function (coords) {
     addressArrival.value = coords.x + ', ' + coords.y;
+  };
+
+  var deactivationFeaturesOption = function () {
+    for (var i = 0; i < listFeatures.length; i++) {
+      listFeatures[i].checked = false;
+    }
   };
 
   var deactivationForm = function () {
@@ -37,6 +44,7 @@
     timeIn.value = '12:00';
     advertisementTitle.value = '';
     objectDescription.value = '';
+    deactivationFeaturesOption();
 
     window.loadImage.deactivationImages();
     var defaultCoords = window.move.getMainPinDefaultCoords();

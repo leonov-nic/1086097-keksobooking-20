@@ -49,6 +49,10 @@
     }
   };
 
+
+
+
+
   var onDeactivationMap = function () {
     window.form.deactivationForm();
     deactivationPin(reset);
@@ -81,12 +85,15 @@
   };
 
   var toggle = function (disabled) {
-    window.form.activationForm(disabled);
-    window.data.renderPins(window.data.PINS);
-    onAddPin();
-    window.form.fullFieldPAdress(mapPinMain);
 
+
+window.data.renderPins(window.data.PINS);
+    window.backend.load(window.data.onLoad, window.data.onError);
+
+    window.form.fullFieldPAdress(mapPinMain);
     window.move.activationMainPinMove();
+    window.form.activationForm(disabled);
+    // onAddPin();
 
     reset.removeEventListener('click', onDeactivationMap);
     reset.addEventListener('click', onDeactivationMap);
@@ -94,6 +101,8 @@
 
   window.map = {
     onLeftMouseButtonPress: onLeftMouseButtonPress
+    // onError: onError
+    // onLoad: onLoad
   };
 
 })();
