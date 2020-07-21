@@ -232,15 +232,21 @@
     return fragment;
   };
 
-  var getFeatures = function (features) {
+
+  var getFeatures = function (types) {
     var cardTypeTemplate = cardTemplate.querySelector('.popup__feature');
 
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < window.utils.getRandomFromInterval(1, 6); i++) {
+
+    if (types.length > 0) {
+    for (var i = 0; i < types.length; i++) {
+
       var newCardType = cardTypeTemplate.cloneNode();
-      newCardType.className = 'popup__feature' + ' ' + 'popup__feature--' + features[i];
+      newCardType.className = 'popup__feature' + ' ' + 'popup__feature--' + types[i];
       fragment.appendChild(newCardType);
     }
+    }
+
     return fragment;
   };
 
@@ -269,7 +275,7 @@
     var listFeatures = newCardTemplate.querySelector('.popup__features');
     newCardTemplate.replaceChild(listFeatures.cloneNode(), listFeatures);
     var listNewFeatures = newCardTemplate.querySelector('.popup__features');
-    listNewFeatures.appendChild(getFeatures(FEATURES));
+    listNewFeatures.appendChild(getFeatures(offer.offer.features));
 
     newCardTemplate.querySelector('.popup__description').textContent = offer.offer.description;
 
