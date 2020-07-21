@@ -17,9 +17,16 @@
   var numberOfGuests = document.querySelector('#capacity');
   var advertisementTitle = document.querySelector('#title');
   var objectDescription = document.querySelector('#description');
+  var listFeatures = document.querySelectorAll('.feature__checkbox');
 
   var fullCurrentFieldAdress = function (coords) {
     addressArrival.value = coords.x + ', ' + coords.y;
+  };
+
+  var deactivationFeaturesOption = function () {
+    for (var i = 0; i < listFeatures.length; i++) {
+      listFeatures[i].checked = false;
+    }
   };
 
   var deactivationForm = function () {
@@ -37,10 +44,13 @@
     timeIn.value = '12:00';
     advertisementTitle.value = '';
     objectDescription.value = '';
+    deactivationFeaturesOption();
 
     window.loadImage.deactivationImages();
     var defaultCoords = window.move.getMainPinDefaultCoords();
     fullCurrentFieldAdress(defaultCoords);
+
+    adForm.removeEventListener('submit', onSubmit);
   };
 
   deactivationForm();
@@ -53,6 +63,16 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     mapForm.classList.remove('ad-form--disabled');
+  };
+
+  var cleanForm = function () {
+    numberOfRooms.value = '1';
+    numberOfGuests.value = '3';
+    typeOfAccommodation.value = 'flat';
+    timeIn.value = '12:00';
+    advertisementTitle.value = '';
+    objectDescription.value = '';
+    deactivationFeaturesOption();
   };
 
   var GuestsRooms = {
@@ -115,12 +135,21 @@
     timeIn.value = evt.target.value;
   });
 
+  var onSubmit = function (evt) {
+    window.backend.save(new FormData(adForm), window.modal.addSuccessModal, window.modal.addErrorModal);
+    evt.preventDefault();
+  };
+
+  adForm.addEventListener('submit', onSubmit);
+
   window.form = {
     activationForm: activationForm,
     deactivationForm: deactivationForm,
+    cleanForm: cleanForm,
     fullFieldPAdress: fullFieldPAdress,
     fullCurrentFieldAdress: fullCurrentFieldAdress,
     addressArrival: addressArrival
   };
 
 })();
+

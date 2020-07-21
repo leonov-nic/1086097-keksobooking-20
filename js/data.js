@@ -8,27 +8,13 @@
     .content
     .querySelector('.map__pin');
 
-  var PIN_SIZE = {
-    width: 50,
-    height: 70
-  };
+  // var PIN_SIZE = {
+  //   width: 50,
+  //   height: 70
+  // };
 
   var DEFAULT_MAIN_PIN_X = 570;
   var DEFAULT_MAIN_PIN_Y = 375;
-
-  var QUANTITY_OF_PINS = 8;
-
-  var getAvatar = function (min, max) {
-    return 'img/avatars/user0' + window.utils.getRandomFromInterval(min, max) + '.png';
-  };
-
-  var getTitle = function (array) {
-    return window.utils.getRandomElement(array);
-  };
-
-  var getLocation = function (min, max, ymin, ymax) {
-    return window.utils.getRandomFromInterval(min, max) - (PIN_SIZE.width / 2) + ', ' + (window.utils.getRandomFromInterval(ymin, ymax) - PIN_SIZE.height);
-  };
 
   var LOCATIONMINMAX = {
     X: {
@@ -41,103 +27,34 @@
     }
   };
 
-  var TITLES = [
-    'Крутая хата',
-    'Так себе уголок',
-    'Уютное гнездышко',
-    'Шикарное местечко',
-    'Зачахлый домик',
-    'Дешево и сердито',
-    'Атасный вид',
-    'Это не серьезно'
-  ];
+  var PINS = [];
 
-  var TYPES = [
-    'palace',
-    'flat',
-    'house',
-    'bungalo'
-  ];
-
-  var CHECKIN = [
-    '12:00',
-    '13:00',
-    '14:00'
-  ];
-
-  var CHECKOUT = [
-    '12:00',
-    '13:00',
-    '14:00'
-  ];
-
-  var FEATURES = [
-    'wifi',
-    'dishwasher',
-    'parking',
-    'washer',
-    'elevator',
-    'conditioner'
-  ];
-  var DESCRIPTIONS = [
-    'офигенный',
-    'охрененный',
-    'просто улёт'
-  ];
-  var PHOTOS = [
-    'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-    'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-    'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-  ];
-
-  var getOffersOptions = function () {
-
-    return {
-
-      author: {
-        avatar: getAvatar(1, 8)
-      },
-
-      offer: {
-        title: getTitle(TITLES),
-        address: getLocation(LOCATIONMINMAX.X.MIN, LOCATIONMINMAX.X.MAX, LOCATIONMINMAX.Y.MIN, LOCATIONMINMAX.Y.MIN),
-        price: window.utils.getRandomFromInterval(1000, 10000),
-        type: window.utils.getRandomElement(TYPES),
-        rooms: window.utils.getRandomFromInterval(1, 4),
-        guests: window.utils.getRandomFromInterval(1, 8),
-        checkin: window.utils.getRandomElement(CHECKIN),
-        checkout: window.utils.getRandomElement(CHECKOUT),
-        feature: window.utils.getRandomArray(FEATURES),
-        description: window.utils.getRandomElement(DESCRIPTIONS),
-        photo: window.utils.getRandomArray(PHOTOS)
-      },
-
-      location: {
-        x: window.utils.getRandomFromInterval(300, 900),
-        y: window.utils.getRandomFromInterval(130, 630)
-      }
-    };
+  var onLoad = function (pins) {
+    // console.log(pins);
+    for (var i = 0; i < pins.length; i++) {
+      PINS.push(pins[i]);
+    }
   };
 
-  var getPinsMap = function () {
-    var pins = [];
+  var onError = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; margin: 80px; text-align: center; background-color: black; padding: 50px;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
 
-    for (var i = 0; i < QUANTITY_OF_PINS; i++) {
-      pins.push(getOffersOptions());
-    }
-    return pins;
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
   };
 
   var getFilledPin = function (pin) {
     var newPinElement = mapPinTemplate.cloneNode(true);
-    newPinElement.style = 'left: ' + pin.location.x + 'px' + '; ' + 'top: ' + pin.location.x + 'px' + ';';
+    newPinElement.style = 'left: ' + pin.location.x + 'px' + '; ' + 'top: ' + pin.location.y + 'px' + ';';
     newPinElement.querySelector('img').src = pin.author.avatar;
     newPinElement.querySelector('img').alt = pin.offer.title;
     return newPinElement;
   };
-
-  var PINS = [];
-  PINS = getPinsMap();
 
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
@@ -153,19 +70,15 @@
 
     switch (type) {
       case 'palace':
-        type = 'Дворец';
-        break;
+        return 'Дворец';
       case 'flat':
-        type = 'Комната';
-        break;
+        return 'Комната';
       case 'house':
-        type = 'Дом';
-        break;
+        return 'Дом';
       case 'bungalo':
-        type = 'Бунгало';
-        break;
+        return 'Бунгало';
     }
-    return type;
+    return '';
   };
 
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
@@ -183,14 +96,17 @@
     return fragment;
   };
 
-  var getFeatures = function (features) {
-    var cardTypeTemplate = cardTemplate.querySelector('.popup__feature');
+  var getFeatures = function (types) {
 
+    var cardTypeTemplate = cardTemplate.querySelector('.popup__feature');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < features.length; i++) {
-      var newCardType = cardTypeTemplate.cloneNode();
-      newCardType.className = 'popup__feature' + ' ' + 'popup__feature--' + features[i];
-      fragment.appendChild(newCardType);
+
+    for (var i = 0; i < types.length; i++) {
+      if (types.length > 0) {
+        var newCardType = cardTypeTemplate.cloneNode();
+        newCardType.className = 'popup__feature' + ' ' + 'popup__feature--' + types[i];
+        fragment.appendChild(newCardType);
+      }
     }
     return fragment;
   };
@@ -220,14 +136,14 @@
     var listFeatures = newCardTemplate.querySelector('.popup__features');
     newCardTemplate.replaceChild(listFeatures.cloneNode(), listFeatures);
     var listNewFeatures = newCardTemplate.querySelector('.popup__features');
-    listNewFeatures.appendChild(getFeatures(offer.offer.feature));
+    listNewFeatures.appendChild(getFeatures(offer.offer.features));
 
     newCardTemplate.querySelector('.popup__description').textContent = offer.offer.description;
 
     var listPhotos = newCardTemplate.querySelector('.popup__photos');
     newCardTemplate.replaceChild(listPhotos.cloneNode(), listPhotos);
     var listNewPhotos = newCardTemplate.querySelector('.popup__photos');
-    listNewPhotos.appendChild(getPhotoAppartamet(offer.offer.photo));
+    listNewPhotos.appendChild(getPhotoAppartamet(offer.offer.photos));
 
     newCardTemplate.querySelector('.popup__avatar').src = offer.author.avatar;
 
@@ -258,6 +174,8 @@
 
   window.data = {
     PINS: PINS,
+    onLoad: onLoad,
+    onError: onError,
     DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
     DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,
     LOCATIONMINMAX: LOCATIONMINMAX,
