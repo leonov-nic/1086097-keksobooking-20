@@ -49,6 +49,9 @@
     window.loadImage.deactivationImages();
     var defaultCoords = window.move.getMainPinDefaultCoords();
     fullCurrentFieldAdress(defaultCoords);
+
+    // adForm.removeEventListener('submit', window.modal.onSubmit);
+
   };
 
   deactivationForm();
@@ -61,6 +64,8 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     mapForm.classList.remove('ad-form--disabled');
+
+
   };
 
   var GuestsRooms = {
@@ -122,6 +127,13 @@
   timeOut.addEventListener('change', function (evt) {
     timeIn.value = evt.target.value;
   });
+
+  var onSubmit = function (evt) {
+    window.backend.save(new FormData(adForm), window.modal.addSuccessModal, window.modal.addErrorModal);
+    evt.preventDefault();
+  };
+
+  adForm.addEventListener('submit', onSubmit);
 
   window.form = {
     activationForm: activationForm,

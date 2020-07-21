@@ -31,8 +31,11 @@
     popup.addEventListener('click', closePopup);
   };
 
-  var addErrorModal = function () {
-    main.appendChild(errorTemplate);
+  var addErrorModal = function (message) {
+
+    var newErrorTemplate = errorTemplate.cloneNode(true);
+    newErrorTemplate.querySelector('.error__message').textContent = message;
+    main.appendChild(newErrorTemplate);
     var popup = document.querySelector('.error');
     var buttonError = document.querySelector('.error__button');
 
@@ -40,10 +43,9 @@
       window.utils.isEscPress(evt, closePopup);
     };
 
-    document.addEventListener('keydown', onPopupEscPress);
-
     var closePopup = function () {
       popup.remove();
+
       document.removeEventListener('keydown', onPopupEscPress);
       popup.removeEventListener('click', closePopup);
       buttonError.removeEventListener('click', closePopup);
@@ -51,7 +53,10 @@
 
     popup.addEventListener('click', closePopup);
     buttonError.addEventListener('click', closePopup);
+    document.addEventListener('keydown', onPopupEscPress);
   };
+
+  // form.addEventListener('submit', onSubmit);
 
   window.modal = {
     addSuccessModal: addSuccessModal,
