@@ -24,6 +24,7 @@
 
     var closePopup = function () {
       popup.remove();
+      window.form.cleanForm();
       document.removeEventListener('keydown', onPopupEscPress);
       popup.removeEventListener('click', closePopup);
     };

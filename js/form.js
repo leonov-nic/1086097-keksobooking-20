@@ -50,8 +50,7 @@
     var defaultCoords = window.move.getMainPinDefaultCoords();
     fullCurrentFieldAdress(defaultCoords);
 
-    // adForm.removeEventListener('submit', window.modal.onSubmit);
-
+    adForm.removeEventListener('submit', onSubmit);
   };
 
   deactivationForm();
@@ -64,8 +63,16 @@
     map.classList.remove('map--faded');
     adForm.classList.remove('ad-form--disabled');
     mapForm.classList.remove('ad-form--disabled');
+  };
 
-
+  var cleanForm = function () {
+    numberOfRooms.value = '1';
+    numberOfGuests.value = '3';
+    typeOfAccommodation.value = 'flat';
+    timeIn.value = '12:00';
+    advertisementTitle.value = '';
+    objectDescription.value = '';
+    deactivationFeaturesOption();
   };
 
   var GuestsRooms = {
@@ -138,9 +145,11 @@
   window.form = {
     activationForm: activationForm,
     deactivationForm: deactivationForm,
+    cleanForm: cleanForm,
     fullFieldPAdress: fullFieldPAdress,
     fullCurrentFieldAdress: fullCurrentFieldAdress,
     addressArrival: addressArrival
   };
 
 })();
+
