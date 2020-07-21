@@ -18,6 +18,11 @@
       return copyArray;
     },
 
+    getRandomElementArray: function (array) {
+      var rand = Math.floor(Math.random() * array.length);
+      return array[rand];
+    },
+
     isEscPress: function (evt, action) {
       if (evt.key === 'Escape') {
         evt.preventDefault();

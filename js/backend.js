@@ -11,23 +11,17 @@
 
   var TIMEOUT_IN_MS = 10000;
 
-     var onLoad = function (data) {
-  console.log(data[0].author.avatar);
+  // var onError = function (errorMessage) {
+  //   var node = document.createElement('div');
+  //   node.style = 'z-index: 100; margin: 0 auto; margin: 80px; text-align: center; background-color: black; padding: 50px;';
+  //   node.style.position = 'absolute';
+  //   node.style.left = 0;
+  //   node.style.right = 0;
+  //   node.style.fontSize = '30px';
 
-  }
-
-    var onError = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; margin: 80px; text-align: center; background-color: black; padding: 50px;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
+  //   node.textContent = errorMessage;
+  //   document.body.insertAdjacentElement('afterbegin', node);
+  // };
 
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -56,7 +50,7 @@
     xhr.send();
   };
 
-// load(onLoad, onError);
+  // load(onLoad, onError);
 
   // load(window.modal.addSuccessModal, window.modal.addErrorModal)
 
