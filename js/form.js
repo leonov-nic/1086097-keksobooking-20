@@ -39,7 +39,7 @@
     mapForm.classList.add('ad-form--disabled');
 
     numberOfRooms.value = '1';
-    numberOfGuests.value = '3';
+    numberOfGuests.value = '1';
     typeOfAccommodation.value = 'flat';
     timeIn.value = '12:00';
     advertisementTitle.value = '';
@@ -82,7 +82,7 @@
     100: ['0']
   };
 
-  var validateField = function (target) {
+  var validateField = function (target, evt) {
     numberOfRooms.setCustomValidity('');
     numberOfGuests.setCustomValidity('');
     if (!GuestsRooms[numberOfRooms.value].includes(numberOfGuests.value)) {
