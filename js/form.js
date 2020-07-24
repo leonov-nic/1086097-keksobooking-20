@@ -67,7 +67,7 @@
 
   var cleanForm = function () {
     numberOfRooms.value = '1';
-    numberOfGuests.value = '3';
+    numberOfGuests.value = '1';
     typeOfAccommodation.value = 'flat';
     timeIn.value = '12:00';
     advertisementTitle.value = '';
@@ -82,7 +82,7 @@
     100: ['0']
   };
 
-  var validateField = function (target, evt) {
+  var validateField = function (target) {
     numberOfRooms.setCustomValidity('');
     numberOfGuests.setCustomValidity('');
     if (!GuestsRooms[numberOfRooms.value].includes(numberOfGuests.value)) {
