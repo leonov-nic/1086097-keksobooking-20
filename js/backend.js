@@ -2,8 +2,7 @@
 
 (function () {
 
-  var URL_LOAD = 'https://javascript.pages.academy/keksobooking/data';
-  var URL_SAVE = 'https://javascript.pages.academy/keksobooking';
+  var URL = 'https://javascript.pages.academy/keksobooking';
 
   var StatusCode = {
     OK: 200
@@ -34,7 +33,7 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open('GET', URL_LOAD);
+    xhr.open('GET', URL + '/data');
     xhr.send();
   };
 
@@ -65,7 +64,7 @@
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open('POST', URL_SAVE);
+    xhr.open('POST', URL);
     xhr.send(data);
   };
 

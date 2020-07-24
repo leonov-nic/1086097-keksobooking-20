@@ -39,7 +39,7 @@
     mapForm.classList.add('ad-form--disabled');
 
     numberOfRooms.value = '1';
-    numberOfGuests.value = '3';
+    numberOfGuests.value = '1';
     typeOfAccommodation.value = 'flat';
     timeIn.value = '12:00';
     advertisementTitle.value = '';
@@ -67,7 +67,7 @@
 
   var cleanForm = function () {
     numberOfRooms.value = '1';
-    numberOfGuests.value = '3';
+    numberOfGuests.value = '1';
     typeOfAccommodation.value = 'flat';
     timeIn.value = '12:00';
     advertisementTitle.value = '';

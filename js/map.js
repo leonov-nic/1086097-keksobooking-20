@@ -91,12 +91,10 @@
     reset.addEventListener('click', onDeactivationMap);
   };
 
-  window.backend.load(window.data.onLoad, window.data.onError);
+  window.backend.load(window.data.onLoad, window.modal.addErrorModal);
 
   window.map = {
     onLeftMouseButtonPress: onLeftMouseButtonPress
-    // onError: onError
-    // onLoad: onLoad
   };
 
 })();
