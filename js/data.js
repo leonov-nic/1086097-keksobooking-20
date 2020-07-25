@@ -29,11 +29,41 @@
 
   var PINS = [];
 
+  // var filteredPins = [];
+  // console.log(filteredPins);
+
   var onLoad = function (pins) {
     // console.log(pins);
     for (var i = 0; i < pins.length; i++) {
       PINS.push(pins[i]);
     }
+
+    activateFilter();
+    // console.log(PINS);
+  };
+
+  // ЗАДАНИЕ 7.2
+
+  var filter = document.querySelector('.map__filters-container');
+
+  var activateFilter = function () {
+    filter.addEventListener('change', filteredPins);
+  };
+
+  var filteredPins = function () {
+    var typeSelect = document.querySelector('#housing-type');
+    // console.log(typeSelect.value);
+
+    var filtrationByTypeTwo = PINS.slice().filter(function (it) {
+      return it.offer.type === typeSelect.value;
+    });
+    // console.log(filtrationByTypeTwo);
+    // console.log(typeSelect.value);
+
+    window.map.removeMapPin();
+    window.map.removeMapCard();
+    renderPins(filtrationByTypeTwo);
+    window.map.onAddPin(filtrationByTypeTwo);
   };
 
   var getFilledPin = function (pin) {
@@ -162,6 +192,7 @@
 
   window.data = {
     PINS: PINS,
+    activateFilter: activateFilter,
     onLoad: onLoad,
     DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
     DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,

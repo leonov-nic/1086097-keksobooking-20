@@ -40,6 +40,9 @@
 
     numberOfRooms.value = '1';
     numberOfGuests.value = '1';
+    priceOfAccommodation.value = '';
+    priceOfAccommodation.min = 5000;
+    priceOfAccommodation.placeholder = '5000';
     typeOfAccommodation.value = 'flat';
     timeIn.value = '12:00';
     advertisementTitle.value = '';
@@ -69,6 +72,7 @@
     numberOfRooms.value = '1';
     numberOfGuests.value = '1';
     typeOfAccommodation.value = 'flat';
+    priceOfAccommodation.value = '';
     timeIn.value = '12:00';
     advertisementTitle.value = '';
     objectDescription.value = '';
