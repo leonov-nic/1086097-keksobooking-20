@@ -92,6 +92,7 @@
     onAddPin(window.data.PINS);
 
     window.data.activateFilter();
+
     reset.removeEventListener('click', onDeactivationMap);
     reset.addEventListener('click', onDeactivationMap);
   };

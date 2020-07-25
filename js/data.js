@@ -45,10 +45,25 @@
   // ЗАДАНИЕ 7.2
 
   var filter = document.querySelector('.map__filters-container');
+  var filterElements = filter.querySelectorAll('select, input');
 
   var activateFilter = function () {
+    filterElements.forEach(function (it) {
+      it.disabled = false;
+    });
+
     filter.addEventListener('change', filteredPins);
   };
+
+  var deactivateFilter = function () {
+    filterElements.forEach(function (it) {
+      it.disabled = true;
+    });
+
+    filter.removeEventListener('change', filteredPins);
+  };
+
+  deactivateFilter();
 
   var filteredPins = function () {
     var typeSelect = document.querySelector('#housing-type');
@@ -193,6 +208,7 @@
   window.data = {
     PINS: PINS,
     activateFilter: activateFilter,
+    // deactivateFilter: deactivateFilter,
     onLoad: onLoad,
     DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
     DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,
