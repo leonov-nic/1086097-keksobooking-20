@@ -39,6 +39,7 @@
     }
 
     activateFilter();
+    deactivateFilter();
     // console.log(PINS);
   };
 
@@ -63,7 +64,7 @@
     filter.removeEventListener('change', filteredPins);
   };
 
-  deactivateFilter();
+
 
   var filteredPins = function () {
     var typeSelect = document.querySelector('#housing-type');
