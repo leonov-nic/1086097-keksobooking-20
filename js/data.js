@@ -64,22 +64,24 @@
     filter.removeEventListener('change', filteredPins);
   };
 
-
-
   var filteredPins = function () {
     var typeSelect = document.querySelector('#housing-type');
     // console.log(typeSelect.value);
 
-    var filtrationByTypeTwo = PINS.slice().filter(function (it) {
+    var filtrationByType = PINS.slice().filter(function (it) {
       return it.offer.type === typeSelect.value;
     });
     // console.log(filtrationByTypeTwo);
     // console.log(typeSelect.value);
 
+    for (var i = 0; i < filtrationByType.length; i++) {
+      filtrationByType = filtrationByType.slice(0, 5);
+    }
+
     window.map.removeMapPin();
     window.map.removeMapCard();
-    renderPins(filtrationByTypeTwo);
-    window.map.onAddPin(filtrationByTypeTwo);
+    renderPins(filtrationByType);
+    window.map.onAddPin(filtrationByType);
   };
 
   var getFilledPin = function (pin) {
