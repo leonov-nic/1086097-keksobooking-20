@@ -61,46 +61,56 @@
     filter.removeEventListener('change', applyFilters);
   };
 
-  var applyFilters = function () {
+ var applyFilters = function () {
 
-    var filterByHouseType = window.data.PINS.slice().filter(function (it) {
-      return it.offer.type === typeSelect.value;
-    });
-
-    var filterByPrice = window.data.PINS.slice().filter(function (it) {
-      var price = PriceField[priceSelect.value.toUpperCase()];
-      return it.offer.price >= price.MIN && it.offer.price <= price.MAX;
-    });
-
-    var filterByRoomsQuantity = window.data.PINS.slice().filter(function (it) {
-      var room = RoomsField[roomsSelect.value.toUpperCase()];
-      return it.offer.rooms === room;
-    });
-
-    var filterByNumberOfGuests = window.data.PINS.slice().filter(function (it) {
-      var guest = GuestsField[guestsSelect.value.toUpperCase()];
-      return it.offer.guests === guest;
-    });
-
-    var filterByFeatures = window.data.PINS.slice().filter(function (it) {
-      var checkedFeatures = featuresFieldset.querySelectorAll('input:checked');
-      return Array.from(checkedFeatures).every(function (item) {
-        return it.offer.features.includes(item.value);
-      });
-    });
+  window.data.PINS.slice().filter(function (offer) {
+      return (
+        filterByHouseType(offer)
+        && filterByPrice(offer)
+        && filterByRoomsQuantity(offer)
+        && filterByNumberOfGuests(offer)
+        && filterByFeatures(offer)
+      );
+  });
 
     var filtrationByPins = filterByHouseType.concat(filterByPrice).concat(filterByRoomsQuantity).concat(filterByNumberOfGuests).concat(filterByFeatures);
     filtrationByPins = filtrationByPins.slice(0, PINS_MAX);
-
-    // var uniquePins = filteredWizards.filter(function (it, i) {
-    //   return filteredWizards.indexOf(it) === i;
-    // });
 
     window.map.removeMapPin();
     window.map.removeMapCard();
     window.data.renderPins(filtrationByPins);
     window.map.onAddPin(filtrationByPins);
   };
+
+  var filterByHouseType = function (it) {
+    return it.offer.type === typeSelect.value;
+  };
+
+  var filterByPrice = function (it) {
+    var price = PriceField[priceSelect.value.toUpperCase()];
+    return it.offer.price >= price.MIN && it.offer.price <= price.MAX;
+  };
+
+  var filterByRoomsQuantity = function (it) {
+    var room = RoomsField[roomsSelect.value.toUpperCase()];
+    return it.offer.rooms === room;
+  };
+
+  var filterByNumberOfGuests = function (it) {
+    var guest = GuestsField[guestsSelect.value.toUpperCase()];
+    return it.offer.guests === guest;
+  };
+
+  var filterByFeatures = function (it) {
+    var checkedFeatures = featuresFieldset.querySelectorAll('input:checked');
+    return Array.from(checkedFeatures).every(function (item) {
+      return it.offer.features.includes(item.value);
+    });
+  };
+
+    // var uniquePins = filteredWizards.filter(function (it, i) {
+    //   return filteredWizards.indexOf(it) === i;
+    // });
 
   window.filter = {
     activateFilter: activateFilter,
