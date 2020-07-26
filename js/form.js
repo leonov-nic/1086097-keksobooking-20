@@ -49,6 +49,8 @@
     objectDescription.value = '';
     deactivationFeaturesOption();
 
+    window.filter.deactivateFilter();
+
     window.loadImage.deactivationImages();
     var defaultCoords = window.move.getMainPinDefaultCoords();
     fullCurrentFieldAdress(defaultCoords);

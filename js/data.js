@@ -37,52 +37,9 @@
     for (var i = 0; i < pins.length; i++) {
       PINS.push(pins[i]);
     }
-
-    activateFilter();
-    deactivateFilter();
-    // console.log(PINS);
   };
 
   // ЗАДАНИЕ 7.2
-
-  var filter = document.querySelector('.map__filters-container');
-  var filterElements = filter.querySelectorAll('select, input');
-
-  var activateFilter = function () {
-    filterElements.forEach(function (it) {
-      it.disabled = false;
-    });
-
-    filter.addEventListener('change', filteredPins);
-  };
-
-  var deactivateFilter = function () {
-    filterElements.forEach(function (it) {
-      it.disabled = true;
-    });
-
-    filter.removeEventListener('change', filteredPins);
-  };
-
-  var filteredPins = function () {
-    var typeSelect = document.querySelector('#housing-type');
-    // console.log(typeSelect.value);
-
-    var filtrationByType = PINS.slice().filter(function (it) {
-      return it.offer.type === typeSelect.value;
-    });
-    // console.log(filtrationByTypeTwo);
-    // console.log(typeSelect.value);
-
-    for (var i = 0; i < filtrationByType.length; i++) {
-      filtrationByType = filtrationByType.slice(0, 5);
-    }
-
-    window.map.removeMapPin();
-    window.map.removeMapCard();
-    renderPins(filtrationByType);
-    window.map.onAddPin(filtrationByType);
-  };
 
   var getFilledPin = function (pin) {
     var newPinElement = mapPinTemplate.cloneNode(true);
@@ -210,8 +167,6 @@
 
   window.data = {
     PINS: PINS,
-    activateFilter: activateFilter,
-    // deactivateFilter: deactivateFilter,
     onLoad: onLoad,
     DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
     DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,

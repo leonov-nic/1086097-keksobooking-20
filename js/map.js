@@ -91,13 +91,14 @@
     window.form.activationForm(disabled);
     onAddPin(window.data.PINS);
 
-    window.data.activateFilter();
+    window.filter.activateFilter();
 
     reset.removeEventListener('click', onDeactivationMap);
     reset.addEventListener('click', onDeactivationMap);
   };
 
   window.backend.load(window.data.onLoad, window.modal.addErrorModal);
+  window.filter.deactivateFilter();
 
   window.map = {
     onLeftMouseButtonPress: onLeftMouseButtonPress,
