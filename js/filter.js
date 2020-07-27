@@ -31,18 +31,15 @@
     }
   };
 
-  var RoomsField = {
-    1: 1,
-    2: 2,
-    3: 3,
-    ANY: Infinity
-  };
+  var updateMapPins = function () {
 
-  var GuestsField = {
-    0: 0,
-    1: 1,
-    2: 2,
-    ANY: Infinity
+    var filteringPins = applyFilters(window.data.PINS);
+    var filteredPins = filteringPins.slice(0, PINS_MAX);
+
+    window.map.removeMapPin();
+    window.map.removeMapCard();
+    window.data.renderPins(filteredPins);
+    window.map.onAddPin(filteredPins);
   };
 
   var activateFilter = function () {
@@ -50,7 +47,7 @@
       it.disabled = false;
     });
 
-    filter.addEventListener('change', applyFilters);
+    filter.addEventListener('change', updateMapPins);
   };
 
   var deactivateFilter = function () {
@@ -58,29 +55,31 @@
       it.disabled = true;
     });
 
-    filter.removeEventListener('change', applyFilters);
+    filter.removeEventListener('change', updateMapPins);
   };
 
- var applyFilters = function () {
+  var applyFilters = function (pins) {
 
-  window.data.PINS.slice().filter(function (offer) {
-      return (
-        filterByHouseType(offer)
-        && filterByPrice(offer)
-        && filterByRoomsQuantity(offer)
-        && filterByNumberOfGuests(offer)
-        && filterByFeatures(offer)
-      );
-  });
-
-    var filtrationByPins = filterByHouseType.concat(filterByPrice).concat(filterByRoomsQuantity).concat(filterByNumberOfGuests).concat(filterByFeatures);
-    filtrationByPins = filtrationByPins.slice(0, PINS_MAX);
-
-    window.map.removeMapPin();
-    window.map.removeMapCard();
-    window.data.renderPins(filtrationByPins);
-    window.map.onAddPin(filtrationByPins);
+    return pins.slice()
+      .filter(filterByHouseType)
+      .filter(filterByPrice)
+      .filter(filterByRoomsQuantity)
+      .filter(filterByNumberOfGuests)
+      .filter(filterByFeatures);
   };
+
+  // var applyFilters = function (pins) {
+
+  //   pins.slice().filter(function (offer) {
+  //     return (
+  //       filterByHouseType(offer)
+  //       && filterByPrice(offer)
+  //       && filterByRoomsQuantity(offer)
+  //       && filterByNumberOfGuests(offer)
+  //       && filterByFeatures(offer)
+  //     )
+  //   });
+  // };
 
   var filterByHouseType = function (it) {
     return it.offer.type === typeSelect.value;
@@ -92,13 +91,11 @@
   };
 
   var filterByRoomsQuantity = function (it) {
-    var room = RoomsField[roomsSelect.value.toUpperCase()];
-    return it.offer.rooms === room;
+    return String(it.offer.rooms) === String(roomsSelect.value) || roomsSelect.value === 'any';
   };
 
   var filterByNumberOfGuests = function (it) {
-    var guest = GuestsField[guestsSelect.value.toUpperCase()];
-    return it.offer.guests === guest;
+    return String(it.offer.guests) === String(guestsSelect.value) || guestsSelect.value === 'any';
   };
 
   var filterByFeatures = function (it) {
@@ -107,10 +104,6 @@
       return it.offer.features.includes(item.value);
     });
   };
-
-    // var uniquePins = filteredWizards.filter(function (it, i) {
-    //   return filteredWizards.indexOf(it) === i;
-    // });
 
   window.filter = {
     activateFilter: activateFilter,
