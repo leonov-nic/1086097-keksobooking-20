@@ -29,12 +29,17 @@
 
   var PINS = [];
 
+  // var filteredPins = [];
+  // console.log(filteredPins);
+
   var onLoad = function (pins) {
     // console.log(pins);
     for (var i = 0; i < pins.length; i++) {
       PINS.push(pins[i]);
     }
   };
+
+  // ЗАДАНИЕ 7.2
 
   var getFilledPin = function (pin) {
     var newPinElement = mapPinTemplate.cloneNode(true);
