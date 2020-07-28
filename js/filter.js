@@ -82,7 +82,7 @@
   // };
 
   var filterByHouseType = function (it) {
-    return it.offer.type === typeSelect.value;
+    return it.offer.type === typeSelect.value || typeSelect.value === 'any';
   };
 
   var filterByPrice = function (it) {
