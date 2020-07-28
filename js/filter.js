@@ -58,6 +58,17 @@
     filter.removeEventListener('change', updateMapPins);
   };
 
+  var resetFilter = function () {
+    filterElements.forEach(function (it) {
+      it.value = 'any';
+    });
+
+    var features = featuresFieldset.querySelectorAll('input');
+    features.forEach(function (feature) {
+      feature.checked = false;
+    });
+  };
+
   var applyFilters = function (pins) {
 
     return pins.slice()
@@ -107,7 +118,8 @@
 
   window.filter = {
     activateFilter: activateFilter,
-    deactivateFilter: deactivateFilter
+    deactivateFilter: deactivateFilter,
+    resetFilter: resetFilter
   };
 
 })();

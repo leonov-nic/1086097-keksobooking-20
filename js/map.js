@@ -51,6 +51,7 @@
     deactivationPin(reset);
     removeMapCard();
     window.move.deactivationMainPinMove();
+    window.filter.resetFilter();
   };
 
   var removeMapCard = function () {
