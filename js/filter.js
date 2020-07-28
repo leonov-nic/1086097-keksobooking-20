@@ -71,7 +71,7 @@
 
   var applyFilters = function (pins) {
 
-    return pins.slice()
+    return pins
       .filter(filterByHouseType)
       .filter(filterByPrice)
       .filter(filterByRoomsQuantity)
@@ -81,7 +81,7 @@
 
   // var applyFilters = function (pins) {
 
-  //   pins.slice().filter(function (offer) {
+  //   return pins.filter(function (offer) {
   //     return (
   //       filterByHouseType(offer)
   //       && filterByPrice(offer)
