@@ -4,15 +4,16 @@
 
   var DEFAULT_MAIN_PIN_X = 570;
   var DEFAULT_MAIN_PIN_Y = 375;
+  var QUANTITY_OF_PINSS = 5;
 
-  var LOCATION_MIN_MAX = {
-    X: {
-      MIN: 0,
-      MAX: 1200
+  var locationMinMax = {
+    x: {
+      min: 0,
+      max: 1200
     },
-    Y: {
-      MIN: 130,
-      MAX: 630
+    y: {
+      min: 130,
+      max: 630
     }
   };
 
@@ -41,7 +42,7 @@
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < pins.length; i++) {
+    for (var i = 0; i < QUANTITY_OF_PINSS; i++) {
       fragment.appendChild(getFilledPin(pins[i]));
       pinsList.appendChild(fragment);
     }
@@ -159,7 +160,7 @@
     onLoad: onLoad,
     DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
     DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,
-    LOCATIONMINMAX: LOCATION_MIN_MAX,
+    LOCATIONMINMAX: locationMinMax,
     renderPins: renderPins,
     getNewCard: getNewCard
   };

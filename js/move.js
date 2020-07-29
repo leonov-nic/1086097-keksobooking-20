@@ -2,10 +2,10 @@
 
 (function () {
 
-  var SMALL_PIN_SIZE = {
-    WIDTH: 65,
-    HEIGHT: 65,
-    POINTER: 22
+  var smallPinSize = {
+    width: 65,
+    height: 65,
+    pointer: 22
   };
 
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -47,10 +47,10 @@
       };
 
       var Border = {
-        TOP: window.data.LOCATIONMINMAX.Y.MIN - mapPinMain.offsetHeight - SMALL_PIN_SIZE.POINTER,
-        BOTTOM: window.data.LOCATIONMINMAX.Y.MAX - mapPinMain.offsetHeight - SMALL_PIN_SIZE.POINTER,
-        LEFT: window.data.LOCATIONMINMAX.X.MIN,
-        RIGHT: window.data.LOCATIONMINMAX.X.MAX - mapPinMain.offsetWidth
+        TOP: window.data.LOCATIONMINMAX.y.min - mapPinMain.offsetHeight - smallPinSize.pointer,
+        BOTTOM: window.data.LOCATIONMINMAX.y.max - mapPinMain.offsetHeight - smallPinSize.pointer,
+        LEFT: window.data.LOCATIONMINMAX.x.min,
+        RIGHT: window.data.LOCATIONMINMAX.x.max - mapPinMain.offsetWidth
       };
 
       if (mapPinMainPosition.x >= Border.LEFT && mapPinMainPosition.x <= Border.RIGHT) {
@@ -60,8 +60,8 @@
         mapPinMain.style.top = mapPinMainPosition.y + 'px';
       }
       var mapPinMainCeilCoords = {
-        x: Math.ceil(mapPinMainPosition.x + (SMALL_PIN_SIZE.WIDTH / 2)),
-        y: mapPinMainPosition.y + SMALL_PIN_SIZE.HEIGHT + SMALL_PIN_SIZE.POINTER
+        x: Math.ceil(mapPinMainPosition.x + (smallPinSize.width / 2)),
+        y: mapPinMainPosition.y + smallPinSize.height + smallPinSize.pointer
       };
 
       window.form.fullCurrentFieldAdress(mapPinMainCeilCoords);

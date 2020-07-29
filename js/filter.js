@@ -12,22 +12,22 @@
   var guestsSelect = filter.querySelector('#housing-guests');
   var featuresFieldset = filter.querySelector('#housing-features');
 
-  var PRICE_FIELD = {
-    ANY: {
-      MIN: 0,
-      MAX: Infinity
+  var priceField = {
+    any: {
+      min: 0,
+      max: Infinity
     },
-    LOW: {
-      MIN: 0,
-      MAX: 10000
+    low: {
+      min: 0,
+      max: 10000
     },
-    MIDDLE: {
-      MIN: 10000,
-      MAX: 50000
+    middle: {
+      min: 10000,
+      max: 50000
     },
-    HIGH: {
-      MIN: 50000,
-      MAX: Infinity
+    high: {
+      min: 50000,
+      max: Infinity
     }
   };
 
@@ -84,8 +84,8 @@
   };
 
   var filterByPrice = function (it) {
-    var price = PRICE_FIELD[priceSelect.value.toUpperCase()];
-    return it.offer.price >= price.MIN && it.offer.price <= price.MAX;
+    var price = priceField[priceSelect.value];
+    return it.offer.price >= price.min && it.offer.price <= price.max;
   };
 
   var filterByRoomsQuantity = function (it) {
