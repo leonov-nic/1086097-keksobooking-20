@@ -4,7 +4,6 @@
 
   var DEFAULT_MAIN_PIN_X = 570;
   var DEFAULT_MAIN_PIN_Y = 375;
-  var QUANTITY_OF_PINSS = 5;
 
   var locationMinMax = {
     x: {
@@ -40,10 +39,11 @@
   };
 
   var renderPins = function (pins) {
+    var partPins = pins.slice(0, 5);
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < QUANTITY_OF_PINSS; i++) {
-      fragment.appendChild(getFilledPin(pins[i]));
+    for (var i = 0; i < partPins.length; i++) {
+      fragment.appendChild(getFilledPin(partPins[i]));
       pinsList.appendChild(fragment);
     }
     return fragment;
