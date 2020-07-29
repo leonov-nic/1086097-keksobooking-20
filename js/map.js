@@ -3,7 +3,6 @@
 (function () {
 
   var LEFT_MOUSE_BUTTON = 0;
-  var KEY_ENTER = 'Enter';
   var QUANTITY_OF_CARDS = 1;
 
   var map = document.querySelector('.map');
@@ -17,7 +16,7 @@
     if (e.button === LEFT_MOUSE_BUTTON) {
       toggle(false);
     }
-  };
+  }
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.key === 'KEY_ENTER') {
@@ -108,7 +107,7 @@
     removeMapPin: removeMapPin,
     removeMapCard: removeMapCard,
     onAddPin: onAddPin,
-    onDeactivationMap
+    onDeactivationMap: onDeactivationMap
   };
 
 })();
