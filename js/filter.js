@@ -55,7 +55,7 @@
       it.disabled = true;
     });
 
-    filter.removeEventListener('change', updateMapPins);
+    filter.addEventListener('change', window.utils.debounce(updateMapPins));
   };
 
   var resetFilter = function () {
