@@ -3,6 +3,8 @@
 (function () {
 
   var DEBOUNCE_INTERVAL = 1000;
+  var KEY_ESCAPE = 'Escape';
+  var KEY_ENTER = 'Enter';
 
   window.utils = {
 
@@ -40,14 +42,14 @@
     },
 
     isEscPress: function (evt, action) {
-      if (evt.key === 'Escape') {
+      if (evt.key === KEY_ESCAPE) {
         evt.preventDefault();
         action();
       }
     },
 
     isEnterPress: function (evt, action) {
-      if (evt.key === 'Enter') {
+      if (evt.key === KEY_ENTER) {
         action();
       }
     }

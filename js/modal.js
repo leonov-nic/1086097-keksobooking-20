@@ -24,9 +24,10 @@
 
     var closePopup = function () {
       popup.remove();
-      window.form.cleanForm();
+      window.form.clean();
       document.removeEventListener('keydown', onPopupEscPress);
       popup.removeEventListener('click', closePopup);
+      window.map.onDeactivationMap();
     };
 
     popup.addEventListener('click', closePopup);
@@ -50,14 +51,13 @@
       document.removeEventListener('keydown', onPopupEscPress);
       popup.removeEventListener('click', closePopup);
       buttonError.removeEventListener('click', closePopup);
+      window.map.onDeactivationMap();
     };
 
     popup.addEventListener('click', closePopup);
     buttonError.addEventListener('click', closePopup);
     document.addEventListener('keydown', onPopupEscPress);
   };
-
-  // form.addEventListener('submit', onSubmit);
 
   window.modal = {
     addSuccessModal: addSuccessModal,

@@ -3,12 +3,11 @@
 (function () {
 
   var URL = 'https://javascript.pages.academy/keksobooking';
+  var TIMEOUT_IN_MS = 10000;
 
   var StatusCode = {
     OK: 200
   };
-
-  var TIMEOUT_IN_MS = 10000;
 
   var load = function (onLoad, onError) {
     var xhr = new XMLHttpRequest();
@@ -17,7 +16,6 @@
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
         onLoad(xhr.response);
-        // console.log(xhr.response);
       } else {
         onError('Ошибка: ' + xhr.status + ' ' + xhr.statusText);
       }
@@ -37,11 +35,6 @@
     xhr.send();
   };
 
-  // console.log(xhr.status);
-  // console.log(xhr.readyState);
-  // console.log(xhr.response);
-  // console.log(xhr.responseText);
-
   var save = function (data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -50,7 +43,7 @@
       if (xhr.status === StatusCode.OK) {
         onLoad(xhr.response);
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError('Ошибка: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
 

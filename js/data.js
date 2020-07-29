@@ -2,21 +2,10 @@
 
 (function () {
 
-  var pinsList = document.querySelector('.map__pins');
-
-  var mapPinTemplate = document.querySelector('#pin')
-    .content
-    .querySelector('.map__pin');
-
-  // var PIN_SIZE = {
-  //   width: 50,
-  //   height: 70
-  // };
-
   var DEFAULT_MAIN_PIN_X = 570;
   var DEFAULT_MAIN_PIN_Y = 375;
 
-  var LOCATIONMINMAX = {
+  var LOCATION_MIN_MAX = {
     X: {
       MIN: 0,
       MAX: 1200
@@ -29,17 +18,17 @@
 
   var PINS = [];
 
-  // var filteredPins = [];
-  // console.log(filteredPins);
+  var pinsList = document.querySelector('.map__pins');
+
+  var mapPinTemplate = document.querySelector('#pin')
+    .content
+    .querySelector('.map__pin');
 
   var onLoad = function (pins) {
-    // console.log(pins);
     for (var i = 0; i < pins.length; i++) {
       PINS.push(pins[i]);
     }
   };
-
-  // ЗАДАНИЕ 7.2
 
   var getFilledPin = function (pin) {
     var newPinElement = mapPinTemplate.cloneNode(true);
@@ -65,7 +54,7 @@
       case 'palace':
         return 'Дворец';
       case 'flat':
-        return 'Комната';
+        return 'Квартира';
       case 'house':
         return 'Дом';
       case 'bungalo':
@@ -170,7 +159,7 @@
     onLoad: onLoad,
     DEFAULT_MAIN_PIN_X: DEFAULT_MAIN_PIN_X,
     DEFAULT_MAIN_PIN_Y: DEFAULT_MAIN_PIN_Y,
-    LOCATIONMINMAX: LOCATIONMINMAX,
+    LOCATIONMINMAX: LOCATION_MIN_MAX,
     renderPins: renderPins,
     getNewCard: getNewCard
   };

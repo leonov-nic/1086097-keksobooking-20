@@ -2,13 +2,13 @@
 
 (function () {
 
-  var mapPinMain = document.querySelector('.map__pin--main');
-
   var SMALL_PIN_SIZE = {
-    width: 65,
-    height: 65,
-    pointer: 22
+    WIDTH: 65,
+    HEIGHT: 65,
+    POINTER: 22
   };
+
+  var mapPinMain = document.querySelector('.map__pin--main');
 
   var activationMainPinMove = function () {
     mapPinMain.removeEventListener('mouseup', window.map.onLeftMouseButtonPress);
@@ -46,11 +46,9 @@
         y: mapPinMain.offsetTop - shift.y
       };
 
-      // console.log(mapPinMain.offsetHeight);
-
       var Border = {
-        TOP: window.data.LOCATIONMINMAX.Y.MIN,
-        BOTTOM: window.data.LOCATIONMINMAX.Y.MAX - mapPinMain.offsetHeight,
+        TOP: window.data.LOCATIONMINMAX.Y.MIN - mapPinMain.offsetHeight - SMALL_PIN_SIZE.POINTER,
+        BOTTOM: window.data.LOCATIONMINMAX.Y.MAX - mapPinMain.offsetHeight - SMALL_PIN_SIZE.POINTER,
         LEFT: window.data.LOCATIONMINMAX.X.MIN,
         RIGHT: window.data.LOCATIONMINMAX.X.MAX - mapPinMain.offsetWidth
       };
@@ -62,8 +60,8 @@
         mapPinMain.style.top = mapPinMainPosition.y + 'px';
       }
       var mapPinMainCeilCoords = {
-        x: Math.ceil(mapPinMainPosition.x + (SMALL_PIN_SIZE.width / 2)),
-        y: mapPinMainPosition.y + SMALL_PIN_SIZE.height + SMALL_PIN_SIZE.pointer
+        x: Math.ceil(mapPinMainPosition.x + (SMALL_PIN_SIZE.WIDTH / 2)),
+        y: mapPinMainPosition.y + SMALL_PIN_SIZE.HEIGHT + SMALL_PIN_SIZE.POINTER
       };
 
       window.form.fullCurrentFieldAdress(mapPinMainCeilCoords);

@@ -29,7 +29,7 @@
     }
   };
 
-  var deactivationForm = function () {
+  var deactivation = function () {
     for (var i = 0; i < adFormFieldset.length; i++) {
       adFormFieldset[i].disabled = true;
     }
@@ -47,6 +47,7 @@
     timeIn.value = '12:00';
     advertisementTitle.value = '';
     objectDescription.value = '';
+    addressArrival.value = '';
     deactivationFeaturesOption();
 
     window.filter.deactivateFilter();
@@ -58,9 +59,9 @@
     adForm.removeEventListener('submit', onSubmit);
   };
 
-  deactivationForm();
+  deactivation();
 
-  var activationForm = function (disabled) {
+  var activation = function (disabled) {
     for (var i = 0; i < adFormFieldset.length; i++) {
       adFormFieldset[i].disabled = disabled;
     }
@@ -70,7 +71,7 @@
     mapForm.classList.remove('ad-form--disabled');
   };
 
-  var cleanForm = function () {
+  var clean = function () {
     numberOfRooms.value = '1';
     numberOfGuests.value = '1';
     typeOfAccommodation.value = 'flat';
@@ -82,10 +83,10 @@
   };
 
   var GuestsRooms = {
-    1: ['1'],
-    2: ['1', '2'],
-    3: ['1', '2', '3'],
-    100: ['0']
+    '1': ['1'],
+    '2': ['1', '2'],
+    '3': ['1', '2', '3'],
+    '100': ['0']
   };
 
   var validateField = function (target) {
@@ -106,23 +107,32 @@
 
   adForm.addEventListener('change', setField);
 
+  var MIN_PRICE_ZERO = 0;
+  var MIN_PRICE_ZERO_PLACEHOLDER = '0';
+  var MIN_PRICE_THOUSAND = 1000;
+  var MIN_PRICE_THOUSAND_PLACEHOLDER = '1000';
+  var MIN_PRICE_FIVE_THOUSAND = 5000;
+  var MIN_PRICE_FIVE_THOUSAND_PLACEHOLDER = '5000';
+  var MIN_PRICE_TEN_THOUSAND = 10000;
+  var MIN_PRICE_TEN_THOUSAND_PLACEHOLDER = '10000';
+
   typeOfAccommodation.addEventListener('change', function (evt) {
     switch (evt.target.value) {
       case 'bungalo':
-        priceOfAccommodation.min = 0;
-        priceOfAccommodation.placeholder = '0';
+        priceOfAccommodation.min = MIN_PRICE_ZERO;
+        priceOfAccommodation.placeholder = MIN_PRICE_ZERO_PLACEHOLDER;
         break;
       case 'flat':
-        priceOfAccommodation.min = 1000;
-        priceOfAccommodation.placeholder = '1000';
+        priceOfAccommodation.min = MIN_PRICE_THOUSAND;
+        priceOfAccommodation.placeholder = MIN_PRICE_THOUSAND_PLACEHOLDER;
         break;
       case 'house':
-        priceOfAccommodation.min = 5000;
-        priceOfAccommodation.placeholder = '5000';
+        priceOfAccommodation.min = MIN_PRICE_FIVE_THOUSAND;
+        priceOfAccommodation.placeholder = MIN_PRICE_FIVE_THOUSAND_PLACEHOLDER;
         break;
       case 'palace':
-        priceOfAccommodation.min = 10000;
-        priceOfAccommodation.placeholder = '10000';
+        priceOfAccommodation.min = MIN_PRICE_TEN_THOUSAND;
+        priceOfAccommodation.placeholder = MIN_PRICE_TEN_THOUSAND_PLACEHOLDER;
         break;
     }
   });
@@ -149,9 +159,9 @@
   adForm.addEventListener('submit', onSubmit);
 
   window.form = {
-    activationForm: activationForm,
-    deactivationForm: deactivationForm,
-    cleanForm: cleanForm,
+    activation: activation,
+    deactivation: deactivation,
+    clean: clean,
     fullFieldPAdress: fullFieldPAdress,
     fullCurrentFieldAdress: fullCurrentFieldAdress,
     addressArrival: addressArrival

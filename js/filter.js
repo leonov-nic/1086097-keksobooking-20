@@ -2,6 +2,8 @@
 
 (function () {
 
+  var PINS_MAX = 5;
+
   var filter = document.querySelector('.map__filters-container');
   var filterElements = filter.querySelectorAll('select, input');
   var typeSelect = document.querySelector('#housing-type');
@@ -10,9 +12,7 @@
   var guestsSelect = filter.querySelector('#housing-guests');
   var featuresFieldset = filter.querySelector('#housing-features');
 
-  var PINS_MAX = 5;
-
-  var PriceField = {
+  var PRICE_FIELD = {
     ANY: {
       MIN: 0,
       MAX: Infinity
@@ -79,25 +79,12 @@
       .filter(filterByFeatures);
   };
 
-  // var applyFilters = function (pins) {
-
-  //   return pins.filter(function (offer) {
-  //     return (
-  //       filterByHouseType(offer)
-  //       && filterByPrice(offer)
-  //       && filterByRoomsQuantity(offer)
-  //       && filterByNumberOfGuests(offer)
-  //       && filterByFeatures(offer)
-  //     )
-  //   });
-  // };
-
   var filterByHouseType = function (it) {
     return it.offer.type === typeSelect.value || typeSelect.value === 'any';
   };
 
   var filterByPrice = function (it) {
-    var price = PriceField[priceSelect.value.toUpperCase()];
+    var price = PRICE_FIELD[priceSelect.value.toUpperCase()];
     return it.offer.price >= price.MIN && it.offer.price <= price.MAX;
   };
 
