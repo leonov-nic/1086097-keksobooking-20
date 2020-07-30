@@ -47,7 +47,7 @@
       it.disabled = false;
     });
 
-    filter.addEventListener('change', updateMapPins);
+    filter.addEventListener('change', window.utils.debounce(updateMapPins));
   };
 
   var deactivateFilter = function () {
@@ -55,7 +55,7 @@
       it.disabled = true;
     });
 
-    filter.addEventListener('change', window.utils.debounce(updateMapPins));
+    filter.removeEventListener('change', window.utils.debounce(updateMapPins));
   };
 
   var resetFilter = function () {

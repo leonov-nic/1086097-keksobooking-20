@@ -2,7 +2,7 @@
 
 (function () {
 
-  var DEBOUNCE_INTERVAL = 1000;
+  var DEBOUNCE_INTERVAL = 500;
   var KEY_ESCAPE = 'Escape';
   var KEY_ENTER = 'Enter';
 

@@ -18,6 +18,60 @@
   var advertisementTitle = document.querySelector('#title');
   var objectDescription = document.querySelector('#description');
   var listFeatures = document.querySelectorAll('.feature__checkbox');
+  var formElements = adForm.querySelectorAll('select, input');
+
+  console.log(formElements);
+
+
+
+  // var chekinvalidFields = function () {
+
+
+    formElements.forEach(function (it) {
+      it.addEventListener('invalid', function() {
+        it.style = 'border-width: 2px; border-color: red;';
+      });
+    });
+
+
+   formElements.forEach(function (it) {
+      it.addEventListener('input', function() {
+
+
+          it.removeAttribute('style');
+
+      });
+    });
+
+
+
+
+    // priceOfAccommodation.addEventListener('invalid', function() {
+    //   it.style = 'border-width: 2px; border-color: red;';
+    // });
+
+    // adForm.addEventListener('input', function(evt) {
+      // if (evt.target === priceOfAccommodation) {
+      //   priceOfAccommodation.removeAttribute('style');
+      // }
+    // });
+
+    // priceOfAccommodation.addEventListener('invalid', function() {
+    //   priceOfAccommodation.style = 'border-width: 2px; border-color: red;';
+    // });
+
+    // adForm.addEventListener('input', function(evt) {
+    //   if (evt.target === priceOfAccommodation) {
+    //     priceOfAccommodation.removeAttribute('style');
+    //   }
+    // });
+
+
+
+  // };
+
+
+
 
   var fullCurrentFieldAdress = function (coords) {
     addressArrival.value = coords.x + ', ' + coords.y;
