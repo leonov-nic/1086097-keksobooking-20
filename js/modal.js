@@ -51,11 +51,11 @@
       document.removeEventListener('keydown', onPopupEscPress);
       popup.removeEventListener('click', closePopup);
       buttonError.removeEventListener('click', closePopup);
-      window.map.onDeactivationMap();
     };
 
     popup.addEventListener('click', closePopup);
     buttonError.addEventListener('click', closePopup);
+    buttonError.addEventListener('click', window.map.onDeactivationMap());
     document.addEventListener('keydown', onPopupEscPress);
   };
 

@@ -602,15 +602,6 @@ fieldset {
 .ad-form__element select:focus,
 .ad-form__element textarea:focus {
   outline: none;
-  -webkit-box-shadow: 0 0 2px 2px #d9d9d3;
-          box-shadow: 0 0 2px 2px #d9d9d3;
-}
-
-.ad-form__element input:focus:invalid,
-.ad-form__element select:focus:invalid,
-.ad-form__element textarea:focus:invalid {
-  outline: none;
-  border-color: #ff6547;
   -webkit-box-shadow: 0 0 2px 2px #ff6547;
           box-shadow: 0 0 2px 2px #ff6547;
 }
