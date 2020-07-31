@@ -14,13 +14,17 @@
 
   function onLeftMouseButtonPress(e) {
     if (e.button === LEFT_MOUSE_BUTTON) {
-      toggle(false);
+      window.backend.load(function (data) {
+        window.data.onLoad(data);
+      }, window.modal.addErrorModal);
     }
   }
 
   mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.key === 'KEY_ENTER') {
-      toggle(false);
+      window.backend.load(function (data) {
+        window.data.onLoad(data);
+      }, window.modal.addErrorModal);
     }
   });
 
@@ -30,8 +34,8 @@
     var openCard = function (item, pin) {
 
       item.addEventListener('click', function () {
-        for (var j = 0; mapPinsItems.length > j; j++) {
-          mapPinsItems[j].classList.remove('map__pin--active');
+        for (var i = 0; mapPinsItems.length > i; i++) {
+          mapPinsItems[i].classList.remove('map__pin--active');
         }
         item.classList.add('map__pin--active');
         map.appendChild(window.data.getNewCard(pin), filterContainer);
@@ -107,6 +111,7 @@
     removeMapPin: removeMapPin,
     removeMapCard: removeMapCard,
     onAddPin: onAddPin,
+    toggle: toggle,
     onDeactivationMap: onDeactivationMap
   };
 
