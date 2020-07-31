@@ -16,6 +16,7 @@
     if (e.button === LEFT_MOUSE_BUTTON) {
       window.backend.load(function (data) {
         window.data.onLoad(data);
+        toggle(false);
       }, window.modal.addErrorModal);
     }
   }
@@ -24,6 +25,7 @@
     if (evt.key === 'KEY_ENTER') {
       window.backend.load(function (data) {
         window.data.onLoad(data);
+        toggle(false);
       }, window.modal.addErrorModal);
     }
   });
@@ -111,7 +113,6 @@
     removeMapPin: removeMapPin,
     removeMapCard: removeMapCard,
     onAddPin: onAddPin,
-    toggle: toggle,
     onDeactivationMap: onDeactivationMap
   };
 

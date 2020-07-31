@@ -28,8 +28,6 @@
     for (var i = 0; i < pins.length; i++) {
       PINS.push(pins[i]);
     }
-
-    window.map.toggle(false);
   };
 
   var getFilledPin = function (pin) {
