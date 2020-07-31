@@ -87,6 +87,10 @@
     var defaultCoords = window.move.getMainPinDefaultCoords();
     fullCurrentFieldAdress(defaultCoords);
 
+    formElements.forEach(function (element) {
+      element.removeAttribute('style');
+    });
+
     adForm.removeEventListener('submit', onSubmit);
   };
 
