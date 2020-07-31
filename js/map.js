@@ -4,6 +4,7 @@
 
   var LEFT_MOUSE_BUTTON = 0;
   var QUANTITY_OF_CARDS = 1;
+  var KEY_ENTER = 'Enter';
 
   var map = document.querySelector('.map');
   var mapPinMain = document.querySelector('.map__pin--main');
@@ -22,7 +23,7 @@
   }
 
   mapPinMain.addEventListener('keydown', function (evt) {
-    if (evt.key === 'KEY_ENTER') {
+    if (evt.key === KEY_ENTER) {
       window.backend.load(function (data) {
         window.data.onLoad(data);
         toggle(false);
